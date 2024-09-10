@@ -1,17 +1,17 @@
 import java.util.Date;
 
 public class Voo  {
-    Date data;
-    Date horario;
+    String origem;
+    String destino;
+    Date dtHr;
     String codigo;
-    String companhia;
+    CompanhiaAerea companhia;
+    private double valorBasico;
+    private double valorBusiness;
+    private double valorPremium;
 
-    public Date getData() {
-        return data;
-    }
-
-    public Date getHorario() {
-        return horario;
+    public Date getDataHora() {
+        return dtHr;
     }
 
     public String getCodigo() {
@@ -21,13 +21,21 @@ public class Voo  {
     public String getCompanhia() {
         return companhia;
     }
-
-    public void setData(Date data) {
-        this.data = data;
+    public double getValorBasico() {
+        return valorBasico;
     }
 
-    public void setHorario(Date horario) {
-        this.horario = horario;
+    public double getValorBusiness() {
+        return valorBusiness;
+    }
+
+    public double getValorPremium() {
+        return valorPremium;
+    }
+
+
+    public void setDataHora(Date horario) {
+        this.dtHr = horario;
     }
 
     public void setCodigo(String codigo) {
@@ -37,11 +45,28 @@ public class Voo  {
     public void setCompanhia(String companhia) {
         this.companhia = companhia;
     }
+    public void setValorBasico(double valorBasico) {
+        this.valorBasico = valorBasico;
+    }
 
-    public Voo(Date data, Date horario, String codigo, String companhia){
-        this.data = data;
-        this.horario = horario;
+    public void setValorBusiness(double valorBusiness) {
+        this.valorBusiness = valorBusiness;
+    }
+
+    public void setValorPremium(double valorPremium) {
+        this.valorPremium = valorPremium;
+    }
+    
+
+    public Voo(String origem, String destino, String dthr, String codigo, CompanhiaAerea companhiaAerea, double valorBasico, double valorBusiness, double valorPremium){
+        this.dtHr = dtHr;
         this.codigo = codigo;
         this.companhia = companhia;
     }
+
+
+    public String getInfosVoo() {
+        return "Voo de " + origem + " para " + destino + " às " + dtHr;
+    }
+
 }

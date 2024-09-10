@@ -3,6 +3,8 @@ public class CompanhiaAerea  {
     private String razaoSocial;
     private String cnpj;
     private String nome;
+    private double valorBagagem;
+    private double valorBagagemAdc;
 
     public int getCodigo() {
         return codigo;
@@ -18,6 +20,14 @@ public class CompanhiaAerea  {
 
     public String getNome() {
         return nome;
+    }
+    
+    public double getValorBagagem() {
+        return valorBagagem;
+    }
+
+    public double getValorBagagemAdc() {
+        return valorBagagemAdc;
     }
 
     public void setCodigo(int codigo) {
@@ -35,6 +45,15 @@ public class CompanhiaAerea  {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
+    public void setValorBagagem(double valorBagagem) {
+        this.valorBagagem = valorBagagem;
+    }
+
+    public void setValorBagagemAdc(double valorBagagemAdc) {
+        this.valorBagagemAdc = valorBagagemAdc;
+    }
+
 
 
     public CompanhiaAerea(int codigo, String razaoSocial, String cnpj, String nome){
