@@ -44,11 +44,6 @@ public class Funcionario {
 
     }
 
-    public static void Main(String[] args){
-        Funcionario funcionario1 = new Funcionario("julia", "70043688888", "julia@gmail.com", "123");
-
-
-    }
-
+    
 
 }

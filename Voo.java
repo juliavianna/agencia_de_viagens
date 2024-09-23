@@ -19,7 +19,7 @@ public class Voo  {
     }
 
     public String getCompanhia() {
-        return companhia;
+        return getCompanhia();
     }
     public double getValorBasico() {
         return valorBasico;
@@ -41,10 +41,10 @@ public class Voo  {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-
+/* 
     public void setCompanhia(String companhia) {
         this.companhia = companhia;
-    }
+    }*/
     public void setValorBasico(double valorBasico) {
         this.valorBasico = valorBasico;
     }
@@ -57,12 +57,13 @@ public class Voo  {
         this.valorPremium = valorPremium;
     }
     
-
+/* 
     public Voo(String origem, String destino, String dthr, String codigo, CompanhiaAerea companhiaAerea, double valorBasico, double valorBusiness, double valorPremium){
         this.dtHr = dtHr;
         this.codigo = codigo;
-        this.companhia = companhia;
+        
     }
+*/
 
 
     public String getInfosVoo() {

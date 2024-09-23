@@ -44,12 +44,6 @@ public class Cliente {
 
     }
 
-    public static void Main(String[] args){
-        Cliente cliente1 = new Cliente("julia", "70043688888", "julia@gmail.com", "123");
-
-
-    }
-
 
 
 }

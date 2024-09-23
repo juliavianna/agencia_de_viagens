@@ -10,6 +10,11 @@ public class Compra {
     public String getMetodo() {
         return metodo;
     }
+    
+    public boolean getConfirmacao() {
+        return confirmacao;
+    }
+
 
     public void setValor(double valor) {
         this.valor = valor;

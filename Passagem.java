@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -63,12 +63,10 @@ public class Passagem {
         //this.taxaComissaoAgencia = taxaComissaoAgencia;
     }
 
-    public List<Passagem> pesquisarPassagem(String aeropOrigem, String aeropDestino, Date data ){
+   /*  public List<Passagem> pesquisarPassagem(String aeropOrigem, String aeropDestino, Date data ){
         List<Passagem> passagensEncontradas = new ArrayList<>();
 
-
-
-    }
+    }*/
 
     public void adicionarVoo(Voo voo) {
         voos.add(voo);  // Adiciona o voo existente à lista de voos
@@ -112,6 +110,7 @@ public class Passagem {
         setTipoPassagem(escolha);
         somaValorVoos(voos, escolha);
 
+        scanner.close();
     }
 
 
