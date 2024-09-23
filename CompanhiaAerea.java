@@ -1,3 +1,5 @@
+import java.util.ArrayList;    
+import java.util.List;
 public class CompanhiaAerea  {
     private int codigo;
     private String razaoSocial;
@@ -5,6 +7,7 @@ public class CompanhiaAerea  {
     private String nome;
     private double valorBagagem;
     private double valorBagagemAdc;
+    private static List<CompanhiaAerea> companhias = new ArrayList<>();
 
     public int getCodigo() {
         return codigo;
@@ -61,5 +64,7 @@ public class CompanhiaAerea  {
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
         this.nome = nome;
+
+        companhias.add(this);
     }
 }
