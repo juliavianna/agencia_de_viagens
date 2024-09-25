@@ -53,6 +53,10 @@ public class Funcionario {
     
     @Override
     public String toString() {
-        return "Funcionario{" + "nome='" + nome + '\'' + ", cpf='" + cpf + '\'' + ", email='" + email + '\'' + ", senha='" + senha + '\'' +'}';
+        return "\nFUNCIONÁRIO:" +
+                "\nNome: " + nome +
+                "\nCPF: " + cpf + 
+                "\nE-mail: " + email +
+                "\nSenha: " + senha;
     }
 }

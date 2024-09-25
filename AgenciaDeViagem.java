@@ -16,12 +16,9 @@ public class AgenciaDeViagem {
         return funcionarios;
     }
 
-    public Funcionario encontrarFuncionarioPorCpf(String cpf) {
+    public void listarFuncionarios() {
         for (Funcionario funcionario : funcionarios) {
-            if (funcionario.getCpf().equals(cpf)) {
-                return funcionario;
-            }
+            System.out.println(funcionario);
         }
-        return null;
     }
 }
