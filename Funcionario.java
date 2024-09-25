@@ -1,13 +1,15 @@
-import java.util.List;
-import java.util.ArrayList;
-
 public class Funcionario {
     private String nome;
     private String cpf;
     private String email;
     private String senha;
-    private static List<Funcionario> funcionarios = new ArrayList<>();
-
+    
+    public Funcionario(String nome, String cpf, String email, String senha){ 
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.senha = senha;
+    }
 
     public String getNome() {
         return nome;
@@ -23,10 +25,6 @@ public class Funcionario {
 
     public String getSenha() {
         return senha;
-    }
-
-    public static List<Funcionario> getFuncionarios() {
-        return funcionarios;
     }
 
     public void setNome(String nome) {
@@ -52,20 +50,9 @@ public class Funcionario {
             this.senha = senha;
         }
     }
-
-    public Funcionario(String nome, String cpf, String email, String senha){ 
-        this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
-        this.senha = senha;
-
-        funcionarios.add(this);
-    }
     
     @Override
     public String toString() {
         return "Funcionario{" + "nome='" + nome + '\'' + ", cpf='" + cpf + '\'' + ", email='" + email + '\'' + ", senha='" + senha + '\'' +'}';
     }
-    
-
 }

@@ -7,7 +7,7 @@ public class Main{
         while (true) {
         
             System.out.println("Olá! Bem vindo a agencia de viagens :)");
-            System.out.println("---------------------------------------------");
+            System.out.println("---------------q------------------------------");
             System.out.println("O que deseja fazer?");
             System.out.println("1- Buscar passagens");
             System.out.println("2- Cadastrar funcionario");
