@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class Main {
 
@@ -19,6 +20,7 @@ public class Main {
                 case 1:
                     System.out.println("-------- Busca de Passagens --------");
                     System.out.println("a complementar");
+                    imprimirDivisoriaComQuebraDeLinha();
                     break;
 
                 case 2:
@@ -67,36 +69,47 @@ public class Main {
                     Funcionario funcionario = new Funcionario(nome, cpf, email, senha);
                     agenciaCentral.adicionarFuncionario(funcionario);
                     System.out.println("Funcionario " + funcionario.getNome() + " cadastrado com sucesso");
-                    
-                    System.out.println("-------------------------------------------");
+                    imprimirDivisoriaComQuebraDeLinha();
                     break;
 
-                case 3:
+                    case 3:
                     System.out.println("-------- Cadastro de Companhia Aerea --------");
-                    System.out.println("Digite o nome da companhia: ");
-                    nome = scanner.nextLine();
-                    if (!nome.isEmpty() && nome.length() > 2) {
-                        break;
+                    
+                    String nomeCiaAerea;
+                    while (true) {
+                        System.out.println("Digite o nome da companhia: ");
+                        nomeCiaAerea = scanner.nextLine();
+                        if (!nomeCiaAerea.isEmpty() && nomeCiaAerea.length() > 2) {
+                            break;
+                        }
+                        System.out.println("Nome inválido. Tente novamente.");
                     }
-                    System.out.println("Digite o código da companhia: ");
-                    int codigo = scanner.nextInt();
-                    if (nome.length() > 2) {
-                        break;
+                
+                    String rSocial;
+                    while (true) {
+                        System.out.println("Digite a razao social: ");
+                        rSocial = scanner.nextLine();
+                        if (!rSocial.isEmpty() && rSocial.length() > 3) {
+                            break;
+                        }
+                        System.out.println("Razão social inválida. Tente novamente.");
                     }
-                    scanner.nextLine();
-                    System.out.println("Digite a razao social: ");
-                    String rSocial = scanner.nextLine();
-                    if (!rSocial.isEmpty() && rSocial.length() > 3) {
-                        break;
+                    
+                    String cnpj;
+                    while (true) {
+                        System.out.println("Digite o CNPJ: ");
+                        cnpj = scanner.nextLine();
+                        if (!cnpj.isEmpty() && cnpj.length() > 3) {
+                            break;
+                        }
+                        System.out.println("CNPJ inválido. Tente novamente.");
                     }
-                    System.out.println("Digite o CNPJ: ");
-                    String cnpj = scanner.nextLine();
-                    if (!cnpj.isEmpty() && cnpj.length() > 3) {
-                        break;
-                    }
-
-                    CompanhiaAerea comp = new CompanhiaAerea(codigo, rSocial, cnpj, nome);
-                    System.out.println("Aeroporto " + comp.getNome() + " cadastrado com sucesso");
+                    
+                    int codigoCiaAerea = gerarCodigoCiaAerea();
+                    CompanhiaAerea companhia = new CompanhiaAerea(codigoCiaAerea, nomeCiaAerea, rSocial, cnpj);
+                    agenciaCentral.adicionarCompanhiaAerea(companhia);
+                    System.out.println("Companhia Aérea " + companhia.getNome() + " cadastrada com sucesso");
+                    imprimirDivisoriaComQuebraDeLinha();
                     break;
 
                 case 4:
@@ -114,12 +127,20 @@ public class Main {
 
                     Aeroporto aerop = new Aeroporto(nome, sigla, cidade, estado, pais);
                     System.out.println("Aeroporto " + aerop.getNome() + " cadastrado com sucesso");
+                    imprimirDivisoriaComQuebraDeLinha();
                     break;
+
                 case 5:
                     agenciaCentral.listarFuncionarios();
+                    imprimirDivisoriaComQuebraDeLinha();
                     break;
 
                 case 6:
+                    agenciaCentral.listarCompanhiasAereas();
+                    imprimirDivisoriaComQuebraDeLinha();
+                    break;
+
+                case 7:
                     System.out.println("Saindo...");
                     scanner.close();
                     return;
@@ -139,8 +160,18 @@ public class Main {
         System.out.println("3- Cadastrar companhia aerea");
         System.out.println("4- Cadastrar aeroporto");
         System.out.println("5- Listar funcionários");
-        System.out.println("6- SAIR");
+        System.out.println("6- Listar companhias aéreas");
+        System.out.println("7- SAIR");
         System.out.println("");
+    }
+
+    public static int gerarCodigoCiaAerea() {
+        Random random = new Random();
+        return 10 + random.nextInt(90);
+    }
+
+    public static void imprimirDivisoriaComQuebraDeLinha(){
+        System.out.println("-------------------------------------------\n");
     }
 }
 
@@ -148,12 +179,7 @@ public class Main {
  * Passagem p1 = new Passagem("GRU", "BPS", 540.99);
  * Passagem p2 = new Passagem("SDU", "GRU", 270);
  * Passagem p3 = new Passagem("CNF", "FEN", 1020.00);
- * 
- * CompanhiaAerea gol = new CompanhiaAerea(1, "Gol", "123", "Gol");
- * CompanhiaAerea latam = new CompanhiaAerea(2, "Latam", "0987", "Latam");
- * CompanhiaAerea copa = new CompanhiaAerea(3, "Copa Airlines", "1111",
- * "Copa Airlines");
- * 
+ 
  * Voo bhPortoSeguro = new Voo("Belo Horizonte", "Porto Seguro",
  * "15/09/2024 10:00", "HH1234", gol, 200.00, 400, 750.50);
  * Voo bhPsp = new Voo("Belo Horizonte", "Sao Paulo", "27/12/2024 10:00",
