@@ -1,13 +1,15 @@
-import java.util.ArrayList;    
-import java.util.List;
 public class CompanhiaAerea  {
+    private String nome;
     private int codigo;
     private String razaoSocial;
     private String cnpj;
-    private String nome;
-    private double valorBagagem;
-    private double valorBagagemAdc;
-    private static List<CompanhiaAerea> companhias = new ArrayList<>();
+    
+    public CompanhiaAerea(int codigo, String nome, String razaoSocial, String cnpj){
+        this.codigo = codigo;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.nome = nome;
+    }
 
     public int getCodigo() {
         return codigo;
@@ -23,14 +25,6 @@ public class CompanhiaAerea  {
 
     public String getNome() {
         return nome;
-    }
-    
-    public double getValorBagagem() {
-        return valorBagagem;
-    }
-
-    public double getValorBagagemAdc() {
-        return valorBagagemAdc;
     }
 
     public void setCodigo(int codigo) {
@@ -48,23 +42,13 @@ public class CompanhiaAerea  {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
-    public void setValorBagagem(double valorBagagem) {
-        this.valorBagagem = valorBagagem;
-    }
 
-    public void setValorBagagemAdc(double valorBagagemAdc) {
-        this.valorBagagemAdc = valorBagagemAdc;
-    }
-
-
-
-    public CompanhiaAerea(int codigo, String razaoSocial, String cnpj, String nome){
-        this.codigo = codigo;
-        this.razaoSocial = razaoSocial;
-        this.cnpj = cnpj;
-        this.nome = nome;
-
-        companhias.add(this);
+    @Override
+    public String toString() {
+        return "\nAGÊNCIA:" +
+                "\n Código: " + codigo +
+                "\n Nome: " + nome +
+                "\n Razão social: " + razaoSocial + 
+                "\n CNPJ: " + cnpj;
     }
 }
