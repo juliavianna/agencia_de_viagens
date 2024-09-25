@@ -68,7 +68,7 @@ public class Main {
         while (true) {
             System.out.println("Digite o nome do funcionário: ");
             nome = scanner.nextLine();
-            if (!nome.isEmpty()) {
+            if (validarString(nome, 0)) {
                 break;
             }
             System.out.println("Nome inválido. Tente novamente.");
@@ -88,7 +88,7 @@ public class Main {
         while (true) {
             System.out.println("Digite o Email: ");
             email = scanner.nextLine();
-            if (!email.isEmpty() && email.contains("@")) {
+            if (validarString(email, 4) && email.contains("@")) {
                 break;
             }
             System.out.println("Email inválido. Tente novamente.");
@@ -98,7 +98,7 @@ public class Main {
         while (true) {
             System.out.println("Digite a senha: ");
             senha = scanner.nextLine();
-            if (!senha.isEmpty() && senha.length() > 3) {
+            if (validarString(senha, 6)) {
                 break;
             }
             System.out.println("Senha inválida. Tente novamente.");
@@ -181,18 +181,3 @@ public class Main {
         imprimirDivisoriaComQuebraDeLinha();
     }
 }
-
-/*
- * Passagem p1 = new Passagem("GRU", "BPS", 540.99);
- * Passagem p2 = new Passagem("SDU", "GRU", 270);
- * Passagem p3 = new Passagem("CNF", "FEN", 1020.00);
- * 
- * Voo bhPortoSeguro = new Voo("Belo Horizonte", "Porto Seguro",
- * "15/09/2024 10:00", "HH1234", gol, 200.00, 400, 750.50);
- * Voo bhPsp = new Voo("Belo Horizonte", "Sao Paulo", "27/12/2024 10:00",
- * "LL0000", gol, 170.00, 200, 550.50);
- * Voo spPMadrid = new Voo("Sao Paulo", "Madrid", "20/11/2024 15:00", "MM0000",
- * copa, 3100.00, 4500, 7500.50);
- * Voo bhPrj = new Voo("Belo Horizonte", "Rio de Janeiro", "1/10/2024 12:00",
- * "RJ1000", latam, 190.00, 400, 700.50);
- */
