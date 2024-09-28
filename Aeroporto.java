@@ -5,6 +5,14 @@ public class Aeroporto  {
     private String estado;
     private String pais;
 
+    public Aeroporto(String nome, String sigla, String cidade, String estado, String pais){
+        this.nome = nome;
+        this.sigla = sigla;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.pais = pais;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -44,16 +52,4 @@ public class Aeroporto  {
     public void setPais(String pais) {
         this.pais = pais;
     }
-
-    public Aeroporto(String nome, String sigla, String cidade, String estado, String pais){
-        this.nome = nome;
-        this.sigla = sigla;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.pais = pais;
-
-
-    }
-
-
 }

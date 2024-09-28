@@ -14,4 +14,8 @@ public class Utils {
         Random random = new Random();
         return 10 + random.nextInt(90);
     }
+
+    public static String getSigla(String nome) {
+        return nome.substring(0, 3).toUpperCase();
+    }
 }

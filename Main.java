@@ -192,8 +192,7 @@ public class Main {
         System.out.println("Digite o nome do aeroporto: ");
         String nome = scanner.nextLine();
 
-        System.out.println("Digite a sigla aeroporto: ");
-        String sigla = scanner.nextLine();
+        String sigla = Utils.getSigla(nome);
 
         System.out.println("Digite a cidade: ");
         String cidade = scanner.nextLine();
@@ -205,7 +204,7 @@ public class Main {
         String pais = scanner.nextLine();
 
         Aeroporto aerop = new Aeroporto(nome, sigla, cidade, estado, pais);
-        System.out.println("Aeroporto " + aerop.getNome() + " cadastrado com sucesso");
+        System.out.println("Aeroporto " + aerop.getNome() + " cadastrado com sucesso. Sigla: " + aerop.getSigla());
         Utils.imprimirDivisoriaComQuebraDeLinha();
         }
 
