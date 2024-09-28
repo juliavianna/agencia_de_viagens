@@ -46,13 +46,12 @@ public class Main {
                         cadastroDeAeroporto();
                         break;
                     case 5:
+                        cadastroDeCliente();
+                        break;
+                    case 6:
                         System.out.println("Saindo...");
                         scanner.close();
                         return;
-                    case 6:
-                        funcionarioLogado = null;
-                        System.out.println("Logout realizado com sucesso.");
-                        break;
                     default:
                         System.out.println("Opção inválida. Tente novamente.");
                         break;
@@ -62,17 +61,19 @@ public class Main {
     }
  
     public static void menuInicial() {
+        System.out.println("MENU INICIAL");
         System.out.println("1. Cadastrar Funcionário");
         System.out.println("2. Fazer Login");
     }
 
     public static void menuPrincipal() {
+        System.out.println("MENU PRINCIPAL");
         System.out.println("1. Busca de Passagens");
         System.out.println("2. Cadastro de Funcionário");
         System.out.println("3. Cadastro de Companhia Aérea");
         System.out.println("4. Cadastro de Aeroporto");
-        System.out.println("5. Sair");
-        System.out.println("6. Logout");
+        System.out.println("5. Cadastro de Cliente");
+        System.out.println("6. Sair");
     }
 
     public static void loginFuncionario() {
@@ -137,7 +138,7 @@ public class Main {
             if (Utils.validarString(senha, 7)) {
                 break;
             }
-            System.out.println("Senha inválida. Tente novamente.");
+            System.out.println("\nSenha inválida. Tente novamente.");
         }
 
         Funcionario funcionario = new Funcionario(nome, cpf, email, senha);
@@ -206,5 +207,34 @@ public class Main {
         Aeroporto aerop = new Aeroporto(nome, sigla, cidade, estado, pais);
         System.out.println("Aeroporto " + aerop.getNome() + " cadastrado com sucesso");
         Utils.imprimirDivisoriaComQuebraDeLinha();
+        }
+
+        public static void cadastroDeCliente() {
+            System.out.println("-------- Cadastro de Cliente --------");
+    
+            String nome;
+            while (true) {
+                System.out.println("Digite o nome do cliente: ");
+                nome = scanner.nextLine();
+                if (Utils.validarString(nome, 0)) {
+                    break;
+                }
+                System.out.println("Nome inválido. Tente novamente.");
+            }
+    
+            String cpf;
+            while (true) {
+                System.out.println("Digite o CPF (apenas os 11 numeros) : ");
+                cpf = scanner.nextLine();
+                if (cpf.length() == 11) {
+                    break;
+                }
+                System.out.println("CPF inválido. Tente novamente.");
+            }
+    
+            Cliente cliente = new Cliente(nome, cpf);
+            agenciaCentral.adicionarCliente(cliente);
+            System.out.println("Cliente " + cliente.getNome() + " cadastrado com sucesso");
+            Utils.imprimirDivisoriaComQuebraDeLinha();
         }
 }
