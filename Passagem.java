@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 //import java.util.Date;
 import java.util.List;
@@ -11,7 +12,15 @@ public class Passagem {
     private double taxaComissaoAgencia= 0.09;
     public List<Voo> voos = new ArrayList<>();
     private int tipoPassagem;
-
+    
+    public Passagem(String aeropOrigem, String aeropDestino, double valorTotal){
+        this.aeropOrigem= aeropOrigem;
+        this.aeropDestino = aeropDestino;
+        //this.moeda = moeda; //????
+        this.valorTotal = valorTotal;
+        //this.taxaComissaoAgencia = taxaComissaoAgencia;
+    }
+    
     public String getAeropOrigem() {
         return aeropOrigem;
     }
@@ -35,7 +44,6 @@ public class Passagem {
         return tipoPassagem;
     }
 
-
     public void setAeropOrigem(String aeropOrigem) {
         this.aeropOrigem = aeropOrigem;
     }
@@ -55,31 +63,18 @@ public class Passagem {
         this.tipoPassagem = tipoPassagem;
     }
 
-    public Passagem(String aeropOrigem, String aeropDestino, double valorTotal){
-        this.aeropOrigem= aeropOrigem;
-        this.aeropDestino = aeropDestino;
-        //this.moeda = moeda; //????
-        this.valorTotal = valorTotal;
-        //this.taxaComissaoAgencia = taxaComissaoAgencia;
-    }
-
-   /*  public List<Passagem> pesquisarPassagem(String aeropOrigem, String aeropDestino, Date data ){
-        List<Passagem> passagensEncontradas = new ArrayList<>();
-
-    }*/
-
     public void adicionarVoo(Voo voo) {
-        voos.add(voo);  // Adiciona o voo existente à lista de voos
+        voos.add(voo); 
     }
 
-    public void listarVoos() {  //chama o método getInfosVoo que mostra as informações do voo
+    public void listarVoos() {
         System.out.println("Voos nessa passagem:");
         for (Voo voo : voos) {
             System.out.println(voo.getInfosVoo());
         }
     }
 
-    public double somaValorVoos(List<Voo> voos, int tipo){  //retorna o valor total da passagem considerando o tipo de p. escolhido
+    public double somaValorVoos(List<Voo> voos, int tipo){ 
         double valorVoo = 0;
         if (tipo == 1){
             for (Voo voo : voos) {
@@ -100,7 +95,7 @@ public class Passagem {
         return valorVoo;
     }
 
-    public void escolherTipoPassagem(){ //define o tipo de passagem através da entrada do teclado e chama o mét. somaValorVoos
+    public void escolherTipoPassagem(){ 
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Selecione o tipo de passagem: ");
@@ -112,7 +107,7 @@ public class Passagem {
 
         scanner.close();
     }
-
+/* 
 
     public static void main(String[] args) {
 
@@ -128,5 +123,5 @@ public class Passagem {
         todasPassagens.add(p3);
     }
 
-
+ */
 }

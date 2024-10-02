@@ -4,14 +4,20 @@ import java.util.ArrayList;
 public class AgenciaDeViagem {
     private List<Funcionario> funcionarios;
     private List<CompanhiaAerea> companhiasAereas;
+    private List<Cliente> clientes;
 
     public AgenciaDeViagem() {
         this.funcionarios = new ArrayList<>();
         this.companhiasAereas = new ArrayList<>();
+        this.clientes = new ArrayList<>();
     }
 
     public void adicionarFuncionario(Funcionario funcionario) {
         funcionarios.add(funcionario);
+    }
+
+    public void adicionarCliente(Cliente cliente) {
+        clientes.add(cliente);
     }
 
     public List<Funcionario> getFuncionarios() {
