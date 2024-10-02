@@ -12,7 +12,7 @@ public class Utils {
 
     public static int gerarCodigoDeID() {
         Random random = new Random();
-        return 10 + random.nextInt(90);
+        return 1000 + random.nextInt(9000);
     }
 
     public static String getSigla(String nome) {
