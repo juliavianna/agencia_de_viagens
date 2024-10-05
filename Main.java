@@ -49,6 +49,9 @@ public class Main {
                         cadastroDeCliente();
                         break;
                     case 6:
+                        cadastroDePassagemAerea();
+                        break;
+                    case 7:
                         System.out.println("Saindo...");
                         scanner.close();
                         return;
@@ -59,7 +62,7 @@ public class Main {
             }
         }
     }
- 
+
     public static void menuInicial() {
         System.out.println("MENU INICIAL");
         System.out.println("1. Cadastrar Funcionário");
@@ -73,7 +76,8 @@ public class Main {
         System.out.println("3. Cadastro de Companhia Aérea");
         System.out.println("4. Cadastro de Aeroporto");
         System.out.println("5. Cadastro de Cliente");
-        System.out.println("6. Sair");
+        System.out.println("6. Cadastro passagem aérea");
+        System.out.println("7. Sair");
     }
 
     public static void loginFuncionario() {
@@ -206,34 +210,98 @@ public class Main {
         Aeroporto aerop = new Aeroporto(nome, sigla, cidade, estado, pais);
         System.out.println("Aeroporto " + aerop.getNome() + " cadastrado com sucesso. Sigla: " + aerop.getSigla());
         Utils.imprimirDivisoriaComQuebraDeLinha();
+    }
+
+    public static void cadastroDeCliente() {
+        System.out.println("-------- Cadastro de Cliente --------");
+
+        String nome;
+        while (true) {
+            System.out.println("Digite o nome do cliente: ");
+            nome = scanner.nextLine();
+            if (Utils.validarString(nome, 0)) {
+                break;
+            }
+            System.out.println("Nome inválido. Tente novamente.");
         }
 
-        public static void cadastroDeCliente() {
-            System.out.println("-------- Cadastro de Cliente --------");
-    
-            String nome;
-            while (true) {
-                System.out.println("Digite o nome do cliente: ");
-                nome = scanner.nextLine();
-                if (Utils.validarString(nome, 0)) {
-                    break;
-                }
-                System.out.println("Nome inválido. Tente novamente.");
+        String cpf;
+        while (true) {
+            System.out.println("Digite o CPF (apenas os 11 numeros) : ");
+            cpf = scanner.nextLine();
+            if (cpf.length() == 11) {
+                break;
             }
-    
-            String cpf;
-            while (true) {
-                System.out.println("Digite o CPF (apenas os 11 numeros) : ");
-                cpf = scanner.nextLine();
-                if (cpf.length() == 11) {
-                    break;
-                }
-                System.out.println("CPF inválido. Tente novamente.");
-            }
-    
-            Cliente cliente = new Cliente(nome, cpf);
-            agenciaCentral.adicionarCliente(cliente);
-            System.out.println("Cliente " + cliente.getNome() + " cadastrado com sucesso");
-            Utils.imprimirDivisoriaComQuebraDeLinha();
+            System.out.println("CPF inválido. Tente novamente.");
         }
+
+        Cliente cliente = new Cliente(nome, cpf);
+        agenciaCentral.adicionarCliente(cliente);
+        System.out.println("Cliente " + cliente.getNome() + " cadastrado com sucesso");
+        Utils.imprimirDivisoriaComQuebraDeLinha();
+    }
+
+    public static void cadastroDePassagemAerea() {
+        System.out.println("-------- Cadastro de Passagem Aérea --------");
+
+        System.out.println("Digite o Aeroporto de Origem: ");
+        String aeroportoOrigem = scanner.nextLine();
+
+        System.out.println("Digite o Aeroporto de Destino: ");
+        String aeroportoDestino = scanner.nextLine();
+
+        System.out.println("Digite a Data e Horário do Voo (formato: YYYY-MM-DD HH:MM): ");
+        String dataHoraVoo = scanner.nextLine();
+
+        System.out.println("Digite a Companhia Aérea: ");
+        String companhiaAerea = scanner.nextLine();
+
+        System.out.println("Digite o Valor da Tarifa Básica: ");
+        double tarifaBasica = scanner.nextDouble();
+        scanner.nextLine();
+
+        System.out.println("Digite o Valor da Tarifa Business: ");
+        double tarifaBusiness = scanner.nextDouble();
+        scanner.nextLine();
+
+        System.out.println("Digite o Valor da Tarifa Premium: ");
+        double tarifaPremium = scanner.nextDouble();
+        scanner.nextLine();
+
+        System.out.println("Digite o Valor da Primeira Bagagem: ");
+        double valorPrimeiraBagagem = scanner.nextDouble();
+        scanner.nextLine();
+
+        System.out.println("Digite o Valor das Bagagens Adicionais: ");
+        double valorBagagensAdicionais = scanner.nextDouble();
+        scanner.nextLine();
+
+        String moeda = "BRL";
+
+        PassagemAerea passagem = new PassagemAerea(
+                aeroportoOrigem,
+                aeroportoDestino,
+                dataHoraVoo,
+                companhiaAerea,
+                tarifaBasica,
+                tarifaBusiness,
+                tarifaPremium,
+                valorPrimeiraBagagem,
+                valorBagagensAdicionais,
+                moeda);
+
+                System.out.println("\nPassagem cadastrada com sucesso!");
+                System.out.println("Código do Voo: " + passagem.getCodigoVoo());
+                System.out.println("Aeroporto de Origem: " + passagem.getAeroportoOrigem());
+                System.out.println("Aeroporto de Destino: " + passagem.getAeroportoDestino());
+                System.out.println("Data e Hora do Voo: " + passagem.getDataHoraVoo());
+                System.out.println("Companhia Aérea: " + passagem.getCompanhiaAerea());
+                System.out.println("Tarifa Básica: R$" + passagem.getTarifaBasica());
+                System.out.println("Tarifa Business: R$" + passagem.getTarifaBusiness());
+                System.out.println("Tarifa Premium: R$" + passagem.getTarifaPremium());
+                System.out.println("Valor da Primeira Bagagem: R$" + passagem.getValorPrimeiraBagagem());
+                System.out.println("Valor das Bagagens Adicionais: R$" + passagem.getValorBagagensAdicionais());
+                System.out.println("Moeda: " + passagem.getMoeda());
+        Utils.imprimirDivisoriaComQuebraDeLinha();
+    }
 }
