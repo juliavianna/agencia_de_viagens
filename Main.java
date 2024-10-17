@@ -15,6 +15,7 @@ public class Main {
                 menuPrincipal();
             }
 
+            
             int escolha = scanner.nextInt();
             scanner.nextLine();
 
@@ -137,7 +138,7 @@ public class Main {
 
         String senha;
         while (true) {
-            System.out.println("Digite a senha: ");
+            System.out.println("Digite a senha de no mínimo 8 dígitos: ");
             senha = scanner.nextLine();
             if (Utils.validarString(senha, 7)) {
                 break;
@@ -181,7 +182,7 @@ public class Main {
             if (Utils.validarString(cnpj, 3)) {
                 break;
             }
-            System.out.println("CNPJ inválido. Tente novamente.");
+            System.out.println("CNPJ deve possuir mais de 3 caracteres. Tente novamente.");
         }
 
         int codigoCiaAerea = Utils.gerarCodigoDeID();
@@ -196,15 +197,16 @@ public class Main {
         System.out.println("Digite o nome do aeroporto: ");
         String nome = scanner.nextLine();
 
-        String sigla = Utils.getSigla(nome);
+        System.out.println("Digite a sigla do aeroporto: ");
+        String sigla = scanner.nextLine();
 
         System.out.println("Digite a cidade: ");
         String cidade = scanner.nextLine();
 
-        System.out.println("Digite o estado: ");
+        System.out.println("Digite a sigla do estado: ");
         String estado = scanner.nextLine();
 
-        System.out.println("Digite o pais: ");
+        System.out.println("Digite a sigla do pais: ");
         String pais = scanner.nextLine();
 
         Aeroporto aerop = new Aeroporto(nome, sigla, cidade, estado, pais);
@@ -243,12 +245,30 @@ public class Main {
 
     public static void cadastroDePassagemAerea() {
         System.out.println("-------- Cadastro de Passagem Aérea --------");
+        if(AgenciaDeViagem.getCompanhiasAereas().isEmpty()){
+            System.out.println("Não há companhias aéreas cadastradas. Cadastre uma companhia aérea antes de cadastrar uma passagem aérea.");
+            return;
+        }
+        if((Aeroporto.getAeroportos().isEmpty())){
+            System.out.println("Não há aeroportos cadastrados. Cadastre um aeroporto antes de cadastrar uma passagem aérea.");
+            return;
+        }
+        
+        System.out.println("Digite a sigla do Aeroporto de Origem: ");
+        String siglaAeroportoOrigem = scanner.nextLine();
+        boolean existe = Aeroporto.verificaAeroporto(siglaAeroportoOrigem);
+        if(existe == false){
+            System.out.println("Aeroporto de Origem não encontrado");
+            return;
+        }
 
-        System.out.println("Digite o Aeroporto de Origem: ");
-        String aeroportoOrigem = scanner.nextLine();
-
-        System.out.println("Digite o Aeroporto de Destino: ");
-        String aeroportoDestino = scanner.nextLine();
+        System.out.println("Digite a sigla do Aeroporto de Destino: ");
+        String siglaAeroportoDestino = scanner.nextLine();
+        existe = Aeroporto.verificaAeroporto(siglaAeroportoDestino);
+        if(existe == false){
+            System.out.println("Aeroporto de Destino não encontrado");
+            return;
+        }
 
         System.out.println("Digite a Data e Horário do Voo (formato: YYYY-MM-DD HH:MM): ");
         String dataHoraVoo = scanner.nextLine();
@@ -277,18 +297,12 @@ public class Main {
         scanner.nextLine();
 
         String moeda = "BRL";
-
-        PassagemAerea passagem = new PassagemAerea(
-                aeroportoOrigem,
-                aeroportoDestino,
-                dataHoraVoo,
-                companhiaAerea,
-                tarifaBasica,
-                tarifaBusiness,
-                tarifaPremium,
-                valorPrimeiraBagagem,
-                valorBagagensAdicionais,
-                moeda);
+       // Cliente cliente = new Cliente(nome, cpf);
+       // agenciaCentral.adicionarCliente(cliente);
+        
+        PassagemAerea passagem = new PassagemAerea(siglaAeroportoOrigem, siglaAeroportoDestino, dataHoraVoo, companhiaAerea,
+            tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais, moeda);
+        
 
                 System.out.println("\nPassagem cadastrada com sucesso!");
                 System.out.println("Código do Voo: " + passagem.getCodigoVoo());

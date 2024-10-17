@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Aeroporto  {
     private String nome;
     private String sigla;
     private String cidade;
     private String estado;
     private String pais;
+    private static List<Aeroporto> aeroportos = new ArrayList<>();
 
     public Aeroporto(String nome, String sigla, String cidade, String estado, String pais){
         this.nome = nome;
@@ -11,6 +15,8 @@ public class Aeroporto  {
         this.cidade = cidade;
         this.estado = estado;
         this.pais = pais;
+
+        aeroportos.add(this);    
     }
 
     public String getNome() {
@@ -51,5 +57,18 @@ public class Aeroporto  {
 
     public void setPais(String pais) {
         this.pais = pais;
+    }
+
+    public static boolean verificaAeroporto(String sigla) {
+        for (Aeroporto aeroporto : aeroportos) {
+            if (aeroporto.getSigla().equals(sigla)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static List<Aeroporto> getAeroportos() {
+        return aeroportos;
     }
 }

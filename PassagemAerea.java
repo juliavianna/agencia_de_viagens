@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class PassagemAerea {
     private String aeroportoOrigem;
     private String aeroportoDestino;
@@ -10,6 +13,7 @@ public class PassagemAerea {
     private double valorPrimeiraBagagem;
     private double valorBagagensAdicionais;
     private String moeda;
+    private static List<PassagemAerea> passagens = new ArrayList<>();
 
     public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea, double tarifaBasica, double tarifaBusiness, double tarifaPremium, double valorPrimeiraBagagem, double valorBagagensAdicionais, String moeda) {
         this.aeroportoOrigem = aeroportoOrigem;
@@ -23,6 +27,8 @@ public class PassagemAerea {
         this.valorPrimeiraBagagem = valorPrimeiraBagagem;
         this.valorBagagensAdicionais = valorBagagensAdicionais;
         this.moeda = moeda;
+
+        passagens.add(this);
     }
 
     public String getCodigoVoo() {
@@ -111,5 +117,15 @@ public class PassagemAerea {
 
     public void setMoeda(String moeda) {
         this.moeda = moeda;
+    }
+
+    public static List<PassagemAerea> buscarPassagens(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo) {
+        List<PassagemAerea> passagensEncontradas = new ArrayList<>();
+        for (PassagemAerea passagem : passagens) {
+            if (passagem.getAeroportoOrigem().equals(aeroportoOrigem) && passagem.getAeroportoDestino().equals(aeroportoDestino)&& passagem.getDataHoraVoo().equals(dataHoraVoo)) {
+                passagensEncontradas.add(passagem);
+            }
+        }
+        return passagensEncontradas;
     }
 }

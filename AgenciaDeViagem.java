@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class AgenciaDeViagem {
     private List<Funcionario> funcionarios;
-    private List<CompanhiaAerea> companhiasAereas;
+    private static List<CompanhiaAerea> companhiasAereas;
     private List<Cliente> clientes;
 
     public AgenciaDeViagem() {
@@ -34,7 +34,7 @@ public class AgenciaDeViagem {
         companhiasAereas.add(companhiaAerea);
     }
 
-    public List<CompanhiaAerea> getCompanhiasAereas() {
+    public static List<CompanhiaAerea> getCompanhiasAereas() {
         return companhiasAereas;
     }
 

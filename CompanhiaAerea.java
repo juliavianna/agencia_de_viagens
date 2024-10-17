@@ -1,14 +1,20 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class CompanhiaAerea  {
     private String nome;
     private int codigo;
     private String razaoSocial;
     private String cnpj;
+    private ArrayList<CompanhiaAerea> companhias = new ArrayList<CompanhiaAerea>();
     
     public CompanhiaAerea(int codigo, String nome, String razaoSocial, String cnpj){
         this.codigo = codigo;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
         this.nome = nome;
+
+        companhias.add(this);
     }
 
     public int getCodigo() {
@@ -51,4 +57,12 @@ public class CompanhiaAerea  {
                 "\n Razão social: " + razaoSocial + 
                 "\n CNPJ: " + cnpj;
     }
+
+    public boolean verificaCompanhia(String companhia){
+        if(companhias.contains(companhia)){
+            return true;
+        }else{
+            return false;
+        }
+   }
 }
