@@ -10,11 +10,11 @@ public class Aeroporto  {
     private static List<Aeroporto> aeroportos = new ArrayList<>();
 
     public Aeroporto(String nome, String sigla, String cidade, String estado, String pais){
-        this.nome = nome;
-        this.sigla = sigla;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.pais = pais;
+        this.nome = nome.toLowerCase();
+        this.sigla = sigla.toLowerCase();
+        this.cidade = cidade.toLowerCase();
+        this.estado = estado.toLowerCase();
+        this.pais = pais.toLowerCase();
 
         aeroportos.add(this);    
     }

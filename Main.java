@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -5,7 +6,27 @@ public class Main {
     private static AgenciaDeViagem agenciaCentral = new AgenciaDeViagem();
     private static Funcionario funcionarioLogado = null;
 
+
     public static void main(String[] args) {
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Funcionario teste = new Funcionario("teste", "11111111111", "teste@gmail", "12345678");  //NAO ESQUECER DE REMOVER !!!!!!!!!!!!!!!!!!!
+        agenciaCentral.adicionarFuncionario(teste);
+        Aeroporto aeroporto = new Aeroporto("Aeroporto Internacional de Guarulhos", "GRU", "Guarulhos", "SP", "br");
+        Aeroporto aeroporto2 = new Aeroporto("Aeroporto Internacional de Confins", "CNF", "Belo horizonte", "bh", "br");
+        
+        CompanhiaAerea companhia = new CompanhiaAerea(1, "Gol", "Gol", "123456789");
+        CompanhiaAerea companhia2 = new CompanhiaAerea(2, "Azul", "Azul", "987654321");
+        agenciaCentral.adicionarCompanhiaAerea(companhia);
+        agenciaCentral.adicionarCompanhiaAerea(companhia2);
+
+        agenciaCentral.adicionarCliente(new Cliente("João", "12345678901"));
+        
+        PassagemAerea p1 = new PassagemAerea ("GRU", "CNF", "2024-10-20 20:00", "Gol", 100.0, 200.0, 300.0, 50.0, 30.0);
+        PassagemAerea p2 = new PassagemAerea ("CNF", "GRU", "2024-10-25 20:00", "Azul", 100.0, 200.0, 300.0, 50.0, 30.0);
+        PassagemAerea.adicionarPassagem(p1);
+        PassagemAerea.adicionarPassagem(p2);
+
         System.out.println("Olá! Bem vindo à agência de viagens :)");
 
         while (true) {
@@ -34,8 +55,7 @@ public class Main {
             } else {
                 switch (escolha) {
                     case 1:
-                        System.out.println("-------- Busca de Passagens --------");
-                        Utils.imprimirDivisoriaComQuebraDeLinha();
+                        buscarPassagens();
                         break;
                     case 2:
                         cadastradoDeFuncionario();
@@ -152,6 +172,77 @@ public class Main {
         Utils.imprimirDivisoriaComQuebraDeLinha();
     }
 
+    public static void buscarPassagens(){
+        System.out.println("-------- Busca de Passagens --------");
+        System.out.println("O que vocÊ desja buscar?");
+        System.out.println("1. Passagens de Ida");
+        System.out.println("2. Passagens de Ida e Volta");
+        int escolha = scanner.nextInt();
+        scanner.nextLine();
+        if(escolha == 1){
+            buscaDePassagensIda();
+        }
+        else if(escolha == 2){
+            buscaDePassagensIdaVolta();
+        }
+        else{
+            System.out.println("Opção inválida. Tente novamente.");
+        }
+    }
+
+    public static String buscaDePassagensIda() {
+        System.out.println("-------- Busca de Passagens --------");
+        boolean passagensCadastradas = !PassagemAerea.getPassagens().isEmpty();
+        if (!passagensCadastradas) {
+            System.out.println("Não há PASSAGENS. Cadastre uma companhia aérea antes de buscar passagens.\n");
+            Utils.imprimirDivisoriaComQuebraDeLinha();
+            return "Erro";
+        }
+
+        System.out.println("Digite o aeroporto de Origem: "); 
+        String origem = scanner.nextLine();
+        System.out.println("Digite o aeroporto de Destino: ");
+        String destino = scanner.nextLine();
+        System.out.println("Digite a data (formato: yyyy-MM-ddTHH:mm:ss): ");
+        String dataIda = scanner.nextLine();
+
+        System.out.println("Voo de Ida: ");
+        String passagens = PassagemAerea.buscarPassagensIda(origem.toLowerCase(), destino.toLowerCase(), dataIda);
+        
+        if (passagens.isEmpty()) {
+            System.out.println("Nenhuma passagem encontrada para os critérios fornecidos.");
+            return "Nenhuma passagem encontrada";
+        } else {
+            return "Passagens encontradas: " + passagens;
+        }
+    }
+
+    public static void buscaDePassagensIdaVolta() {
+        System.out.println("-------- Busca de Passagens --------");
+        boolean passagensCadastradas = !PassagemAerea.getPassagens().isEmpty();
+        if (!passagensCadastradas) {
+            System.out.println("Não há PASSAGENS. Cadastre uma companhia aérea antes de buscar passagens./n");
+            Utils.imprimirDivisoriaComQuebraDeLinha();
+            return;
+        }
+
+        System.out.println("Digite a cidade de Origem: "); 
+        String origem = scanner.nextLine();
+        System.out.println("Digite a cidade de Destino: ");
+        String destino = scanner.nextLine();
+        System.out.println("Digite a data de ida: ");
+        String dataIda = scanner.nextLine();
+        System.out.println("Digite a data de volta: ");
+        String dataVolta = scanner.nextLine();
+
+        System.out.println("Voo de Ida: ");
+        PassagemAerea.buscarPassagensIda(origem.toLowerCase(), destino.toLowerCase(), dataIda);
+        System.out.println("Voo de Volta: ");
+        PassagemAerea.buscarPassagensIda(destino, origem, dataVolta);
+        
+        Utils.imprimirDivisoriaComQuebraDeLinha();
+    }
+
     public static void cadastroDeCompanhiaAerea() {
         System.out.println("-------- Cadastro de Companhia Aerea --------");
 
@@ -246,11 +337,13 @@ public class Main {
     public static void cadastroDePassagemAerea() {
         System.out.println("-------- Cadastro de Passagem Aérea --------");
         if(AgenciaDeViagem.getCompanhiasAereas().isEmpty()){
-            System.out.println("Não há companhias aéreas cadastradas. Cadastre uma companhia aérea antes de cadastrar uma passagem aérea.");
+            System.out.println("Não há COMPANHIAS AEREAS cadastradas. Cadastre uma companhia aérea antes de cadastrar uma passagem aérea.");
+            Utils.imprimirDivisoriaComQuebraDeLinha();
             return;
         }
-        if((Aeroporto.getAeroportos().isEmpty())){
-            System.out.println("Não há aeroportos cadastrados. Cadastre um aeroporto antes de cadastrar uma passagem aérea.");
+        if((Aeroporto.getAeroportos().isEmpty() || Aeroporto.getAeroportos().size() == 1)){
+            System.out.println("Não há AEROPORTOS cadastrados. Cadastre um aeroporto antes de cadastrar uma passagem aérea.");
+            Utils.imprimirDivisoriaComQuebraDeLinha();
             return;
         }
         
@@ -259,15 +352,27 @@ public class Main {
         boolean existe = Aeroporto.verificaAeroporto(siglaAeroportoOrigem);
         if(existe == false){
             System.out.println("Aeroporto de Origem não encontrado");
-            return;
+            System.out.println("Digite novamente a sigla do Aeroporto de Origem: ");
+            siglaAeroportoOrigem = scanner.nextLine();
+            existe = Aeroporto.verificaAeroporto(siglaAeroportoOrigem);
+            if(existe == false){
+                System.out.println("Aeroporto de Origem não encontrado");
+                return;
+            }
         }
 
         System.out.println("Digite a sigla do Aeroporto de Destino: ");
         String siglaAeroportoDestino = scanner.nextLine();
-        existe = Aeroporto.verificaAeroporto(siglaAeroportoDestino);
-        if(existe == false){
+        boolean existe2 = Aeroporto.verificaAeroporto(siglaAeroportoDestino);
+        if(existe2 == false){
             System.out.println("Aeroporto de Destino não encontrado");
-            return;
+            System.out.println("Digite novamente a sigla do Aeroporto de Destino: ");
+            siglaAeroportoOrigem = scanner.nextLine();
+            existe2 = Aeroporto.verificaAeroporto(siglaAeroportoDestino);
+            if(existe == false){
+                System.out.println("Aeroporto de Destino não encontrado");
+                return;
+            }       
         }
 
         System.out.println("Digite a Data e Horário do Voo (formato: YYYY-MM-DD HH:MM): ");
@@ -275,6 +380,17 @@ public class Main {
 
         System.out.println("Digite a Companhia Aérea: ");
         String companhiaAerea = scanner.nextLine();
+        existe = CompanhiaAerea.verificaCompanhia(companhiaAerea);
+        if(existe == false){
+            System.out.println("Companhia Aérea não encontrada");
+            System.out.println("Digite novamente a Companhia Aérea: ");
+            companhiaAerea = scanner.nextLine();
+            existe = CompanhiaAerea.verificaCompanhia(companhiaAerea);
+            if(existe == false){
+                System.out.println("Companhia Aérea não encontrada");
+                return;
+            }
+        }
 
         System.out.println("Digite o Valor da Tarifa Básica: ");
         double tarifaBasica = scanner.nextDouble();
@@ -293,7 +409,7 @@ public class Main {
         scanner.nextLine();
 
         System.out.println("Digite o Valor das Bagagens Adicionais: ");
-        double valorBagagensAdicionais = scanner.nextDouble();
+        double valorBagagensAdicionais = scanner.nextDouble(); 
         scanner.nextLine();
 
         String moeda = "BRL";
@@ -301,7 +417,7 @@ public class Main {
        // agenciaCentral.adicionarCliente(cliente);
         
         PassagemAerea passagem = new PassagemAerea(siglaAeroportoOrigem, siglaAeroportoDestino, dataHoraVoo, companhiaAerea,
-            tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais, moeda);
+            tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais);
         
 
                 System.out.println("\nPassagem cadastrada com sucesso!");

@@ -15,9 +15,9 @@ public class PassagemAerea {
     private String moeda;
     private static List<PassagemAerea> passagens = new ArrayList<>();
 
-    public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea, double tarifaBasica, double tarifaBusiness, double tarifaPremium, double valorPrimeiraBagagem, double valorBagagensAdicionais, String moeda) {
-        this.aeroportoOrigem = aeroportoOrigem;
-        this.aeroportoDestino = aeroportoDestino;
+    public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea, double tarifaBasica, double tarifaBusiness, double tarifaPremium, double valorPrimeiraBagagem, double valorBagagensAdicionais) {
+        this.aeroportoOrigem = aeroportoOrigem.toLowerCase();
+        this.aeroportoDestino = aeroportoDestino.toLowerCase();
         this.dataHoraVoo = dataHoraVoo;
         this.codigoVoo = Utils.gerarCodigoVoo();
         this.companhiaAerea = companhiaAerea;
@@ -26,9 +26,12 @@ public class PassagemAerea {
         this.tarifaPremium = tarifaPremium;
         this.valorPrimeiraBagagem = valorPrimeiraBagagem;
         this.valorBagagensAdicionais = valorBagagensAdicionais;
-        this.moeda = moeda;
+        this.moeda = "BRL";
 
         passagens.add(this);
+    }
+    public static List<PassagemAerea> getPassagens() {
+        return passagens;
     }
 
     public String getCodigoVoo() {
@@ -119,13 +122,42 @@ public class PassagemAerea {
         this.moeda = moeda;
     }
 
-    public static List<PassagemAerea> buscarPassagens(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo) {
-        List<PassagemAerea> passagensEncontradas = new ArrayList<>();
+    public static void adicionarPassagem(PassagemAerea passagemAerea) {
+        passagens.add(passagemAerea);
+    }
+
+    public static String buscarPassagensIda(String origem, String destino, String dataHora) {
+        //List<PassagemAerea> passagensEncontradas = new ArrayList<>();
+        System.out.println("---------------------------");
+        System.out.println(passagens.toString());
         for (PassagemAerea passagem : passagens) {
-            if (passagem.getAeroportoOrigem().equals(aeroportoOrigem) && passagem.getAeroportoDestino().equals(aeroportoDestino)&& passagem.getDataHoraVoo().equals(dataHoraVoo)) {
-                passagensEncontradas.add(passagem);
+            if (passagem.getAeroportoOrigem().equalsIgnoreCase(origem)){
+                if (passagem.getAeroportoDestino().equalsIgnoreCase(destino)){
+                    if (passagem.getDataHoraVoo().equalsIgnoreCase(dataHora)){
+                        return passagem.toString();
+                    }
+                }
+            }
+            else{
+                return "Nenhuma passagem encontrada";
             }
         }
-        return passagensEncontradas;
+        return "---------------------------";
     }
+
+    @Override
+    public String toString() {
+        return "\nPassagem Aérea:" +
+                "\n Código do Voo: " + codigoVoo +
+                "\n Data e Hora do Voo: " + dataHoraVoo +
+                "\n Tarifa Básica: " + tarifaBasica +
+                "\n Tarifa Business: " + tarifaBusiness +
+                "\n Tarifa Premium: " + tarifaPremium +
+                "\n Valor da Primeira Bagagem: " + valorPrimeiraBagagem +
+                "\n Valor das Bagagens Adicionais: " + valorBagagensAdicionais +
+                "\n Moeda: " + moeda;
+    }
+
+
+    
 }

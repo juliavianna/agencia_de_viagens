@@ -6,13 +6,13 @@ public class CompanhiaAerea  {
     private int codigo;
     private String razaoSocial;
     private String cnpj;
-    private ArrayList<CompanhiaAerea> companhias = new ArrayList<CompanhiaAerea>();
+    private static ArrayList<CompanhiaAerea> companhias = new ArrayList<CompanhiaAerea>();
     
     public CompanhiaAerea(int codigo, String nome, String razaoSocial, String cnpj){
         this.codigo = codigo;
-        this.razaoSocial = razaoSocial;
+        this.razaoSocial = razaoSocial.toLowerCase();
         this.cnpj = cnpj;
-        this.nome = nome;
+        this.nome = nome.toLowerCase();
 
         companhias.add(this);
     }
@@ -58,11 +58,12 @@ public class CompanhiaAerea  {
                 "\n CNPJ: " + cnpj;
     }
 
-    public boolean verificaCompanhia(String companhia){
-        if(companhias.contains(companhia)){
-            return true;
-        }else{
-            return false;
+    public static boolean verificaCompanhia(String nome) {
+        for (CompanhiaAerea companhiaAerea : companhias) {
+            if (companhiaAerea.getNome().equals(nome)) {
+                return true;
+            }
         }
-   }
+        return false;
+    }
 }
