@@ -15,7 +15,7 @@ public class PassagemAerea {
     private String moeda;
     private static List<PassagemAerea> passagens = new ArrayList<>();
 
-    public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea, double tarifaBasica, double tarifaBusiness, double tarifaPremium, double valorPrimeiraBagagem, double valorBagagensAdicionais) {
+    public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea, double tarifaBasica, double tarifaBusiness, double tarifaPremium) {
         this.aeroportoOrigem = aeroportoOrigem.toLowerCase();
         this.aeroportoDestino = aeroportoDestino.toLowerCase();
         this.dataHoraVoo = dataHoraVoo;
@@ -24,9 +24,17 @@ public class PassagemAerea {
         this.tarifaBasica = tarifaBasica;
         this.tarifaBusiness = tarifaBusiness;
         this.tarifaPremium = tarifaPremium;
-        this.valorPrimeiraBagagem = valorPrimeiraBagagem;
-        this.valorBagagensAdicionais = valorBagagensAdicionais;
         this.moeda = "BRL";
+        
+        if(CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea)== null){
+            this.valorPrimeiraBagagem = 0;
+            this.valorBagagensAdicionais = 0;
+        }
+        else{
+            this.valorPrimeiraBagagem = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea).getValorPrimeiraBagagem();
+            this.valorBagagensAdicionais = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea).getValorBagagensAdicionais();
+        }
+        
 
         passagens.add(this);
     }
@@ -67,11 +75,17 @@ public class PassagemAerea {
     }
 
     public double getValorPrimeiraBagagem() {
-        return valorPrimeiraBagagem;
+        return CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea).getValorPrimeiraBagagem();
     }
 
     public double getValorBagagensAdicionais() {
-        return valorBagagensAdicionais;
+        CompanhiaAerea companhia = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea);
+        if (companhia == null) {
+            return 0;
+        }
+        else {
+            return companhia.getValorBagagensAdicionais();
+        }
     }
 
     public String getMoeda() {
@@ -110,14 +124,6 @@ public class PassagemAerea {
         this.tarifaPremium = tarifaPremium;
     }
 
-    public void setValorPrimeiraBagagem(double valorPrimeiraBagagem) {
-        this.valorPrimeiraBagagem = valorPrimeiraBagagem;
-    }
-
-    public void setValorBagagensAdicionais(double valorBagagensAdicionais) {
-        this.valorBagagensAdicionais = valorBagagensAdicionais;
-    }
-
     public void setMoeda(String moeda) {
         this.moeda = moeda;
     }
@@ -153,8 +159,8 @@ public class PassagemAerea {
                 "\n Tarifa Básica: " + tarifaBasica +
                 "\n Tarifa Business: " + tarifaBusiness +
                 "\n Tarifa Premium: " + tarifaPremium +
-                "\n Valor da Primeira Bagagem: " + valorPrimeiraBagagem +
-                "\n Valor das Bagagens Adicionais: " + valorBagagensAdicionais +
+                "\n Valor da Primeira Bagagem: " + getValorPrimeiraBagagem() +
+                "\n Valor das Bagagens Adicionais: " + getValorBagagensAdicionais() +
                 "\n Moeda: " + moeda;
     }
 

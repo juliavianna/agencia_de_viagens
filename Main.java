@@ -15,15 +15,15 @@ public class Main {
         Aeroporto aeroporto = new Aeroporto("Aeroporto Internacional de Guarulhos", "GRU", "Guarulhos", "SP", "br");
         Aeroporto aeroporto2 = new Aeroporto("Aeroporto Internacional de Confins", "CNF", "Belo horizonte", "bh", "br");
         
-        CompanhiaAerea companhia = new CompanhiaAerea(1, "Gol", "Gol", "123456789");
-        CompanhiaAerea companhia2 = new CompanhiaAerea(2, "Azul", "Azul", "987654321");
+        CompanhiaAerea companhia = new CompanhiaAerea(1, "Gol", "Gol", "123456789", 30.0, 50.0);
+        CompanhiaAerea companhia2 = new CompanhiaAerea(2, "Azul", "Azul", "987654321", 30.0, 50.0);
         agenciaCentral.adicionarCompanhiaAerea(companhia);
         agenciaCentral.adicionarCompanhiaAerea(companhia2);
 
         agenciaCentral.adicionarCliente(new Cliente("João", "12345678901"));
         
-        PassagemAerea p1 = new PassagemAerea ("GRU", "CNF", "2024-10-20 20:00", "Gol", 100.0, 200.0, 300.0, 50.0, 30.0);
-        PassagemAerea p2 = new PassagemAerea ("CNF", "GRU", "2024-10-25 20:00", "Azul", 100.0, 200.0, 300.0, 50.0, 30.0);
+        PassagemAerea p1 = new PassagemAerea ("GRU", "CNF", "2024-10-20 20:00", "Gol", 100.0, 200.0, 300.0);
+        PassagemAerea p2 = new PassagemAerea ("CNF", "GRU", "2024-10-25 20:00", "Azul", 100.0, 200.0, 300.0);
         PassagemAerea.adicionarPassagem(p1);
         PassagemAerea.adicionarPassagem(p2);
 
@@ -276,8 +276,28 @@ public class Main {
             System.out.println("CNPJ deve possuir mais de 3 caracteres. Tente novamente.");
         }
 
+        double bagagem;
+        while (true) {
+            System.out.println("Digite o valor da Primeira Bagagem: ");
+            bagagem = scanner.nextDouble();
+            if (bagagem == 0) {
+                break;
+            }
+            System.out.println("Bagagem deve possuir um valor. Tente novamente.");
+        }
+
+        double bagagemAdc;
+        while (true) {
+            System.out.println("Digite o valor das Bagagens adicionais: ");
+            bagagemAdc = scanner.nextDouble();
+            if (bagagemAdc == 0) {
+                break;
+            }
+            System.out.println("Bagagem deve possuir um valor. Tente novamente.");
+        }
+
         int codigoCiaAerea = Utils.gerarCodigoDeID();
-        CompanhiaAerea companhia = new CompanhiaAerea(codigoCiaAerea, nomeCiaAerea, rSocial, cnpj);
+        CompanhiaAerea companhia = new CompanhiaAerea(codigoCiaAerea, nomeCiaAerea, rSocial, cnpj, bagagem, bagagemAdc);
         agenciaCentral.adicionarCompanhiaAerea(companhia);
         System.out.println("Companhia Aérea " + companhia.getNome() + " cadastrada com sucesso");
         Utils.imprimirDivisoriaComQuebraDeLinha();
@@ -417,7 +437,7 @@ public class Main {
        // agenciaCentral.adicionarCliente(cliente);
         
         PassagemAerea passagem = new PassagemAerea(siglaAeroportoOrigem, siglaAeroportoDestino, dataHoraVoo, companhiaAerea,
-            tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais);
+            tarifaBasica, tarifaBusiness, tarifaPremium);
         
 
                 System.out.println("\nPassagem cadastrada com sucesso!");
