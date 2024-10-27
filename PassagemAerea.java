@@ -15,8 +15,11 @@ public class PassagemAerea {
     private String moeda;
     private static List<PassagemAerea> passagens = new ArrayList<>();
     private List<Voo> voos;
+    private Frequencia frequencia;
 
-    public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea, double tarifaBasica, double tarifaBusiness, double tarifaPremium, double valorPrimeiraBagagem, double valorBagagensAdicionais) {
+    public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea,
+            double tarifaBasica, double tarifaBusiness, double tarifaPremium, double valorPrimeiraBagagem,
+            double valorBagagensAdicionais, String frequencia) {
         this.aeroportoOrigem = aeroportoOrigem.toLowerCase();
         this.aeroportoDestino = aeroportoDestino.toLowerCase();
         this.dataHoraVoo = dataHoraVoo;
@@ -26,16 +29,21 @@ public class PassagemAerea {
         this.tarifaBusiness = tarifaBusiness;
         this.tarifaPremium = tarifaPremium;
         this.moeda = "BRL";
-        
-        if(CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea)== null){
+        this.frequencia = new Frequencia();
+
+       for(int i = 0;i < frequencia.length();i+=2){
+        this.frequencia.setFrequencia(frequencia.charAt(i));
+       }
+
+        if (CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea) == null) {
             this.valorPrimeiraBagagem = 0;
             this.valorBagagensAdicionais = 0;
-        }
-        else{
+        } else {
             this.valorPrimeiraBagagem = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea).getValorPrimeiraBagagem();
-            this.valorBagagensAdicionais = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea).getValorBagagensAdicionais();
+            this.valorBagagensAdicionais = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea)
+                    .getValorBagagensAdicionais();
         }
-        
+
         this.voos = new ArrayList<>();
 
         passagens.add(this);
@@ -105,8 +113,7 @@ public class PassagemAerea {
         CompanhiaAerea companhia = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea);
         if (companhia == null) {
             return 0;
-        }
-        else {
+        } else {
             return companhia.getValorBagagensAdicionais();
         }
     }
@@ -155,22 +162,22 @@ public class PassagemAerea {
         passagens.add(passagemAerea);
     }
 
+    public String getFreq(){
+        return frequencia.mostrarFrequencia();
+    }
+
     public static String buscarPassagensIda(String origem, String destino, String dataHora) {
-        List<PassagemAerea> passagensEncontradas = new ArrayList<>();
+        // List<PassagemAerea> passagensEncontradas = new ArrayList<>();
         System.out.println("---------------------------");
-       // System.out.println(passagens.toString());
+        System.out.println(passagens.toString());
         for (PassagemAerea passagem : passagens) {
-          //  System.out.println("AAAAAAA"+passagem);
-            if (passagem.getAeroportoOrigem().equalsIgnoreCase(origem)){
-                if (passagem.getAeroportoDestino().equalsIgnoreCase(destino)){
-                    if (passagem.getDataHoraVoo().equals(dataHora)){
-                        passagensEncontradas.add(passagem);
-                        return passagensEncontradas.toString();
-                        
+            if (passagem.getAeroportoOrigem().equalsIgnoreCase(origem)) {
+                if (passagem.getAeroportoDestino().equalsIgnoreCase(destino)) {
+                    if (passagem.getDataHoraVoo().equalsIgnoreCase(dataHora)) {
+                        return passagem.toString();
                     }
                 }
-            }
-            else{
+            } else {
                 return "Nenhuma passagem encontrada";
             }
         }
@@ -179,11 +186,12 @@ public class PassagemAerea {
 
     @Override
     public String toString() {
-        return "\n-----Passagem Aérea:-----" +
-                "\n Origem: " + aeroportoOrigem +
-                "\n Destino: " + aeroportoDestino +
-                "\n Código: " + codigoVoo +
-                "\n Data e Hora: " + dataHoraVoo +
+        return "\nPassagem Aérea:" +
+                "\n Aeroporto de origem: " + aeroportoOrigem +
+                "\n Aeroporto de destino: " + aeroportoDestino +
+                "\n Código do Voo: " + codigoVoo +
+                "\n Data e Hora do Voo: " + dataHoraVoo +
+                "\n Frequencia: " + frequencia.mostrarFrequencia() +
                 "\n Tarifa Básica: " + tarifaBasica +
                 "\n Tarifa Business: " + tarifaBusiness +
                 "\n Tarifa Premium: " + tarifaPremium +
@@ -202,5 +210,5 @@ public class PassagemAerea {
         sb.append("\n Remuneração da Agência: ").append(calcularRemuneracaoAgencia());
         return sb.toString();
     }
-    
+
 }
