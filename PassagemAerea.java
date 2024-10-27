@@ -54,7 +54,7 @@ public class PassagemAerea {
     }
 
     public double calcularRemuneracaoAgencia() {
-        return calcularTarifaTotal() + AgenciaDeViagem.getTaxaFixa();
+        return calcularTarifaTotal() * AgenciaDeViagem.getTaxaFixa();
     }
 
     public List<Voo> getVoos() {

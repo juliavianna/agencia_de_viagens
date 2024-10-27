@@ -5,7 +5,7 @@ public class AgenciaDeViagem {
     private List<Funcionario> funcionarios;
     private static List<CompanhiaAerea> companhiasAereas;
     private List<Cliente> clientes;
-    private static double taxaFixa = 50.0;
+    private static double taxaFixa = 0.20;
 
     public AgenciaDeViagem() {
         this.funcionarios = new ArrayList<>();
