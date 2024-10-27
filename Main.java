@@ -98,7 +98,7 @@ public class Main {
     }
 
     public static void menuPrincipal() {
-        System.out.println("MENU PRINCIPAL");
+        System.out.println("\nMENU PRINCIPAL");
         System.out.println("1. Busca de Passagens");
         System.out.println("2. Cadastro de Funcionário");
         System.out.println("3. Cadastro de Companhia Aérea");
@@ -182,7 +182,7 @@ public class Main {
 
     public static void buscarPassagens(){
         System.out.println("-------- Busca de Passagens --------");
-        System.out.println("O que vocÊ desja buscar?");
+        System.out.println("O que você deseja buscar?");
         System.out.println("1. Passagens de Ida");
         System.out.println("2. Passagens de Ida e Volta");
         int escolha = scanner.nextInt();
@@ -196,6 +196,7 @@ public class Main {
         else{
             System.out.println("Opção inválida. Tente novamente.");
         }
+        System.out.println("---------------------------");
     }
 
     public static String buscaDePassagensIda() {
@@ -217,11 +218,12 @@ public class Main {
         System.out.println("Voo de Ida: ");
         String passagens = PassagemAerea.buscarPassagensIda(origem.toLowerCase(), destino.toLowerCase(), dataIda);
         
-        if (passagens.isEmpty()) {
+        if (passagens == "Nenhuma passagem encontrada") {
             System.out.println("Nenhuma passagem encontrada para os critérios fornecidos.");
             return "Nenhuma passagem encontrada";
         } else {
-            return "Passagens encontradas: " + passagens;
+            System.out.println("Passagens encontradas: " + passagens);
+            return "Passagens encontradas!";
         }
     }
 

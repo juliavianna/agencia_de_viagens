@@ -156,14 +156,17 @@ public class PassagemAerea {
     }
 
     public static String buscarPassagensIda(String origem, String destino, String dataHora) {
-        //List<PassagemAerea> passagensEncontradas = new ArrayList<>();
+        List<PassagemAerea> passagensEncontradas = new ArrayList<>();
         System.out.println("---------------------------");
-        System.out.println(passagens.toString());
+       // System.out.println(passagens.toString());
         for (PassagemAerea passagem : passagens) {
+          //  System.out.println("AAAAAAA"+passagem);
             if (passagem.getAeroportoOrigem().equalsIgnoreCase(origem)){
                 if (passagem.getAeroportoDestino().equalsIgnoreCase(destino)){
-                    if (passagem.getDataHoraVoo().equalsIgnoreCase(dataHora)){
-                        return passagem.toString();
+                    if (passagem.getDataHoraVoo().equals(dataHora)){
+                        passagensEncontradas.add(passagem);
+                        return passagensEncontradas.toString();
+                        
                     }
                 }
             }
@@ -176,9 +179,11 @@ public class PassagemAerea {
 
     @Override
     public String toString() {
-        return "\nPassagem Aérea:" +
-                "\n Código do Voo: " + codigoVoo +
-                "\n Data e Hora do Voo: " + dataHoraVoo +
+        return "\n-----Passagem Aérea:-----" +
+                "\n Origem: " + aeroportoOrigem +
+                "\n Destino: " + aeroportoDestino +
+                "\n Código: " + codigoVoo +
+                "\n Data e Hora: " + dataHoraVoo +
                 "\n Tarifa Básica: " + tarifaBasica +
                 "\n Tarifa Business: " + tarifaBusiness +
                 "\n Tarifa Premium: " + tarifaPremium +

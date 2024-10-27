@@ -9,6 +9,7 @@ public class Voo  {
     Date dtHr;
     String codigo;
     CompanhiaAerea companhia;
+    Aeronave aeronave;
     private double valorBasico;
     private double valorBusiness;
     private double valorPremium;
@@ -33,11 +34,14 @@ public class Voo  {
 
         voos.add(this);
     }
+    public Voo(){
+        voos.add(this);
+    }
 
     public void adicionarVoo(Voo voo) {
         this.voos.add(voo);
     }
-    
+
     public List<Voo> getVoos() {
         return voos;
     }
