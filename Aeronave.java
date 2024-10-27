@@ -1,54 +1,46 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Aeronave {
-    private int maximoPassageiros;
-    private double maximoCarga;
-    private int[] assentos = new int[6];
-    private int qtdFileiras;
-    private String[] fileiras = new String[qtdFileiras];
-    private List<Aeronave> aeronaves = new ArrayList<>();
+     private String nome;
+     private boolean[][] assentos;
+     private HashMap<Character, Integer> colunas = new HashMap<>();
 
-    public Aeronave(int maximoPassageiros, double maximoCarga, int qtdFileiras) {
-        this.maximoPassageiros = maximoPassageiros;
-        this.maximoCarga = maximoCarga;
-        this.qtdFileiras = qtdFileiras;
+     public Aeronave(String nome, int numColunas) {
+          this.nome = nome;
+          assentos = new boolean[6][numColunas];
 
-        aeronaves.add(this);
-    }
+          // setar todos os assentos para true, pq se for true ele esta livre
+          // se for false pq esta ocupado 
+          for (int i = 0; i < assentos.length; i++) {
+               for (int j = 0; j < assentos[i].length; j++) {
+                    assentos[i][j] = true;
+               }
+          }
 
-    public int getQtdFileiras() {
-        return qtdFileiras;
-    }
-    public int getMaximoPassageiros() {
-        return maximoPassageiros;
-    }
-    public double getMaximoCarga() {
-        return maximoCarga;
-    }
-    public List<Aeronave> getAeronaves() {
-        return aeronaves;
-    }
-    public int[] getAssentos() {
-        return assentos;
-    }
-    public String[] getFileiras() {
-        return fileiras;
-    }
+          int valor = 140;
+          for(int i = 1;i <= numColunas;i++){
+               colunas.put((char)valor,i);
+               valor++;
+          }
+          
+     }
 
-    public void setQtdFileiras(int qtdFileiras) {
-        this.qtdFileiras = qtdFileiras;
-    }
-    public void setMaximoCarga(double maximoCarga) {
-        this.maximoCarga = maximoCarga;
-    }
-    public void setMaximoPassageiros(int maximoPassageiros) {
-        this.maximoPassageiros = maximoPassageiros;
-    }
+     public void reservarAssento(String assento) { // 3d
+          int fila = assento.charAt(0) - '0';
+          int coluna = colunas.get(assento.charAt(1));
+          assentos[fila][coluna] = false; // seta pra ocupado
+     }
 
-    /*public bool verificaDisponibilidadeTotal(){
-
-    }*/
-
+     public void mostrarAssentosLivres(){
+          int valor = 140;
+          for (int i = 0; i < assentos.length; i++) {
+               for (int j = 0; j < assentos[i].length; j++) {
+                    if(assentos[i][j] == true){
+                         System.out.println("Assento: "+i+""+(char)valor);
+                         valor++;
+                    }
+               }
+          }
+     }
 
 }
