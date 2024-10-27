@@ -77,7 +77,7 @@ public class Main {
                         cadastroDePassagemAerea();
                         break;
                     case 7:
-                        comprarPassagem(passagens);
+                        comprarPassagem();
                         break;
                     case 8:
                         System.out.println("Saindo...");
@@ -216,12 +216,12 @@ public class Main {
 
         System.out.println("Voo de Ida: ");
         String passagens = PassagemAerea.buscarPassagensIda(origem.toLowerCase(), destino.toLowerCase(), dataIda);
-        
-        if (passagens.isEmpty()) {
+        if(passagens == null){
             System.out.println("Nenhuma passagem encontrada para os critérios fornecidos.");
             return "Nenhuma passagem encontrada";
-        } else {
-            return "Passagens encontradas: " + passagens;
+        }
+        else{
+            return "Passagens encontradas: " + passagens.toString();
         }
     }
 
@@ -469,82 +469,62 @@ public class Main {
         Utils.imprimirDivisoriaComQuebraDeLinha();
     }
 
-    public static void comprarPassagem(List<PassagemAerea> passagensExistentes) {
-        System.out.println("Deseja adicionar voos a uma passagem existente? (s/n)");
-        String resposta = scanner.nextLine();
-        PassagemAerea passagem;
+    public static String comprarPassagem() {
+        System.out.println("-------- Compra de Passagem --------");
+        double valorFinal = 0;
+        System.out.println("Digite o aeroporto de Origem: "); 
+        String origem = scanner.nextLine();
+        System.out.println("Digite o aeroporto de Destino: ");
+        String destino = scanner.nextLine();
+        System.out.println("Digite a data (formato: yyyy-MM-ddTHH:mm:ss): ");
+        String dataIda = scanner.nextLine();
 
-        if (resposta.equalsIgnoreCase("s")) {
-            System.out.println("Selecione a passagem:");
-            for (int i = 0; i < passagensExistentes.size(); i++) {
-                System.out.println((i + 1) + ": " + passagensExistentes.get(i).toString());
-            }
+        System.out.println("Voo de Ida: ");
+        PassagemAerea passagem = PassagemAerea.buscarPassagem(origem.toLowerCase(), destino.toLowerCase(), dataIda);
+        if(passagem == null){
+            System.out.println("Nenhuma passagem encontrada para os critérios fornecidos.");
+            System.out.println("Nenhuma passagem encontrada"); 
+        }
+        else{
+            System.out.println(passagem.toString());
+        
+            System.out.println("Qual tarifa deseja comprar?");
+            System.out.println("1. Tarifa Básica" + "\n2. Tarifa Business" + "\n3. Tarifa Premium");
             int escolha = scanner.nextInt();
-            scanner.nextLine(); // Consumir a quebra de linha
-            passagem = passagensExistentes.get(escolha - 1);
-        } else {
-            System.out.println("Digite o aeroporto de origem:");
-            String aeroportoOrigem = scanner.nextLine();
-            System.out.println("Digite o aeroporto de destino:");
-            String aeroportoDestino = scanner.nextLine();
-            System.out.println("Digite a data e hora do voo (formato: yyyy-MM-dd HH:mm):");
-            String dataHoraVoo = scanner.nextLine();
-            System.out.println("Digite a frequencia: \n Ex: 1,2,3 \n Domingo = 1, Segunda = 2 e assim por diante");
-        String frequencia = scanner.nextLine();
-            System.out.println("Digite a companhia aérea:");
-            String companhiaAerea = scanner.nextLine();
-            System.out.println("Digite a tarifa básica:");
-            double tarifaBasica = scanner.nextDouble();
-            System.out.println("Digite a tarifa business:");
-            double tarifaBusiness = scanner.nextDouble();
-            System.out.println("Digite a tarifa premium:");
-            double tarifaPremium = scanner.nextDouble();
-            System.out.println("Digite o valor da primeira bagagem:");
-            double valorPrimeiraBagagem = scanner.nextDouble();
-            System.out.println("Digite o valor das bagagens adicionais:");
-            double valorBagagensAdicionais = scanner.nextDouble();
             scanner.nextLine();
-
-            passagem = new PassagemAerea(aeroportoOrigem, aeroportoDestino, dataHoraVoo, companhiaAerea, tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais, frequencia);
-            passagensExistentes.add(passagem);
-        }
-
-        boolean adicionarMaisVoos = true;
-        while (adicionarMaisVoos) {
-            System.out.println("Digite a origem do voo:");
-            String origem = scanner.nextLine();
-            System.out.println("Digite o destino do voo:");
-            String destino = scanner.nextLine();
-            System.out.println("Digite a data e hora do voo (formato: yyyy-MM-dd HH:mm):");
-            String dataHora = scanner.nextLine();
-            System.out.println("Digite o preço do voo:"); // o funcionário é quem realiza a compra da passagem pelo cliente!!!
-            double preco = scanner.nextDouble();
-            scanner.nextLine();
-
-            // Voo voo = new Voo();
-            // voo.origem = origem;
-            // voo.destino = destino;
-            // try {
-            //     voo.setDataHora(new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dataHora));
-            // } catch (ParseException e) {
-            //     System.out.println("Erro ao parsear a data: " + e.getMessage());
-            //     return;
-            // }
-            // voo.setValorBasico(preco);
-
-           // passagem.adicionarVoo(voo);
-
-            System.out.println("Deseja adicionar mais um voo? (s/n)");
-            resposta = scanner.nextLine();
-            if (!resposta.equalsIgnoreCase("s")) {
-                adicionarMaisVoos = false;
+            if(escolha == 1){
+                System.out.println("Tarifa Básica selecionada");
+                valorFinal = passagem.getTarifaBasica();
             }
-        }
+            else if(escolha == 2){
+                System.out.println("Tarifa Business selecionada");
+                valorFinal = passagem.getTarifaBusiness();
+            }
+            else if(escolha == 3){
+                System.out.println("Tarifa Premium selecionada");
+                valorFinal = passagem.getTarifaPremium();
+            }
+            else{
+                System.out.println("Opção inválida. Tente novamente.");
+                escolha = scanner.nextInt();
+                scanner.nextLine();
+            }
 
-        double tarifaTotal = passagem.calcularTarifaTotal();
-        double remuneracaoAgencia = passagem.calcularRemuneracaoAgencia();
-        System.out.println("Tarifa total: " + tarifaTotal);
-        System.out.println("Remuneração da agência: " + remuneracaoAgencia);
+            valorFinal += passagem.getValorPrimeiraBagagem();
+
+            System.out.println("Deseja adicionar bagagem adicional? (S/N)");
+            String resposta = scanner.nextLine();
+
+            if(resposta.equalsIgnoreCase("S")){
+
+                valorFinal += passagem.getValorBagagensAdicionais();
+
+            }
+            System.out.println("Valor total da passagem: R$" + valorFinal);
+            System.out.println("\n-----------------------\n" + valorFinal);
+
+        }
+        return "";
     }
 
 }

@@ -186,6 +186,24 @@ public class PassagemAerea {
         return "---------------------------";
     }
 
+    public static PassagemAerea buscarPassagem(String origem, String destino, String dataHora) {
+        // List<PassagemAerea> passagensEncontradas = new ArrayList<>();
+        System.out.println("---------------------------");
+        System.out.println(passagens.toString());
+        for (PassagemAerea passagem : passagens) {
+            if (passagem.getAeroportoOrigem().equalsIgnoreCase(origem)) {
+                if (passagem.getAeroportoDestino().equalsIgnoreCase(destino)) {
+                    if (passagem.getDataHoraVoo().equalsIgnoreCase(dataHora)) {
+                        return passagem;
+                    }
+                }
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return "\nPassagem Aérea:" +
