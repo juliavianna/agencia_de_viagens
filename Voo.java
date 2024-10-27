@@ -21,6 +21,7 @@ public class Voo  {
     public String getCompanhia() {
         return getCompanhia();
     }
+    
     public double getValorBasico() {
         return valorBasico;
     }

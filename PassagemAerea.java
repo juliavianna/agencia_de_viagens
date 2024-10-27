@@ -14,8 +14,9 @@ public class PassagemAerea {
     private double valorBagagensAdicionais;
     private String moeda;
     private static List<PassagemAerea> passagens = new ArrayList<>();
+    private List<Voo> voos;
 
-    public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea, double tarifaBasica, double tarifaBusiness, double tarifaPremium) {
+    public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea, double tarifaBasica, double tarifaBusiness, double tarifaPremium, double valorPrimeiraBagagem, double valorBagagensAdicionais) {
         this.aeroportoOrigem = aeroportoOrigem.toLowerCase();
         this.aeroportoDestino = aeroportoDestino.toLowerCase();
         this.dataHoraVoo = dataHoraVoo;
@@ -35,9 +36,27 @@ public class PassagemAerea {
             this.valorBagagensAdicionais = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea).getValorBagagensAdicionais();
         }
         
+        this.voos = new ArrayList<>();
 
         passagens.add(this);
     }
+
+    public void adicionarVoo(Voo voo) {
+        this.voos.add(voo);
+    }
+
+    public double calcularTarifaTotal() {
+        double tarifaTotal = 0;
+        for (Voo voo : voos) {
+            tarifaTotal += voo.getValorBasico(); // ou valorBusiness, valorPremium conforme necessário
+        }
+        return tarifaTotal;
+    }
+
+    public List<Voo> getVoos() {
+        return voos;
+    }
+
     public static List<PassagemAerea> getPassagens() {
         return passagens;
     }
@@ -164,6 +183,14 @@ public class PassagemAerea {
                 "\n Moeda: " + moeda;
     }
 
-
+    public String toStringDetalhado() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nPassagem Aérea:");
+        for (Voo voo : voos) {
+            sb.append("\n").append(voo.getInfosVoo());
+        }
+        sb.append("\n Tarifa Total: ").append(calcularTarifaTotal());
+        return sb.toString();
+    }
     
 }

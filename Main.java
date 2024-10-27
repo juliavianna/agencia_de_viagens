@@ -1,5 +1,8 @@
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
@@ -22,10 +25,11 @@ public class Main {
 
         agenciaCentral.adicionarCliente(new Cliente("João", "12345678901"));
         
-        PassagemAerea p1 = new PassagemAerea ("GRU", "CNF", "2024-10-20 20:00", "Gol", 100.0, 200.0, 300.0);
-        PassagemAerea p2 = new PassagemAerea ("CNF", "GRU", "2024-10-25 20:00", "Azul", 100.0, 200.0, 300.0);
-        PassagemAerea.adicionarPassagem(p1);
-        PassagemAerea.adicionarPassagem(p2);
+        PassagemAerea p1 = new PassagemAerea ("GRU", "CNF", "2024-10-20 20:00", "Gol", 100.0, 200.0, 300.0, 50.0, 30.0);
+        PassagemAerea p2 = new PassagemAerea ("CNF", "GRU", "2024-10-25 20:00", "Azul", 100.0, 200.0, 300.0, 50.0, 30.0);
+        List<PassagemAerea> passagens = new ArrayList<>();
+        passagens.add(p1);
+        passagens.add(p2);
 
         System.out.println("Olá! Bem vindo à agência de viagens :)");
 
@@ -73,6 +77,9 @@ public class Main {
                         cadastroDePassagemAerea();
                         break;
                     case 7:
+                        comprarPassagem(passagens);
+                        break;
+                    case 8:
                         System.out.println("Saindo...");
                         scanner.close();
                         return;
@@ -98,7 +105,8 @@ public class Main {
         System.out.println("4. Cadastro de Aeroporto");
         System.out.println("5. Cadastro de Cliente");
         System.out.println("6. Cadastro passagem aérea");
-        System.out.println("7. Sair");
+        System.out.println("7. Comprar Passagem");
+        System.out.println("8. Sair");
     }
 
     public static void loginFuncionario() {
@@ -437,7 +445,7 @@ public class Main {
        // agenciaCentral.adicionarCliente(cliente);
         
         PassagemAerea passagem = new PassagemAerea(siglaAeroportoOrigem, siglaAeroportoDestino, dataHoraVoo, companhiaAerea,
-            tarifaBasica, tarifaBusiness, tarifaPremium);
+            tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais);
         
 
                 System.out.println("\nPassagem cadastrada com sucesso!");
@@ -454,4 +462,79 @@ public class Main {
                 System.out.println("Moeda: " + passagem.getMoeda());
         Utils.imprimirDivisoriaComQuebraDeLinha();
     }
+
+    public static void comprarPassagem(List<PassagemAerea> passagensExistentes) {
+        System.out.println("Deseja adicionar voos a uma passagem existente? (s/n)");
+        String resposta = scanner.nextLine();
+        PassagemAerea passagem;
+
+        if (resposta.equalsIgnoreCase("s")) {
+            System.out.println("Selecione a passagem:");
+            for (int i = 0; i < passagensExistentes.size(); i++) {
+                System.out.println((i + 1) + ": " + passagensExistentes.get(i).toString());
+            }
+            int escolha = scanner.nextInt();
+            scanner.nextLine(); // Consumir a quebra de linha
+            passagem = passagensExistentes.get(escolha - 1);
+        } else {
+            System.out.println("Digite o aeroporto de origem:");
+            String aeroportoOrigem = scanner.nextLine();
+            System.out.println("Digite o aeroporto de destino:");
+            String aeroportoDestino = scanner.nextLine();
+            System.out.println("Digite a data e hora do voo (formato: yyyy-MM-dd HH:mm):");
+            String dataHoraVoo = scanner.nextLine();
+            System.out.println("Digite a companhia aérea:");
+            String companhiaAerea = scanner.nextLine();
+            System.out.println("Digite a tarifa básica:");
+            double tarifaBasica = scanner.nextDouble();
+            System.out.println("Digite a tarifa business:");
+            double tarifaBusiness = scanner.nextDouble();
+            System.out.println("Digite a tarifa premium:");
+            double tarifaPremium = scanner.nextDouble();
+            System.out.println("Digite o valor da primeira bagagem:");
+            double valorPrimeiraBagagem = scanner.nextDouble();
+            System.out.println("Digite o valor das bagagens adicionais:");
+            double valorBagagensAdicionais = scanner.nextDouble();
+            scanner.nextLine();
+
+            passagem = new PassagemAerea(aeroportoOrigem, aeroportoDestino, dataHoraVoo, companhiaAerea, tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais);
+            passagensExistentes.add(passagem);
+        }
+
+        boolean adicionarMaisVoos = true;
+        while (adicionarMaisVoos) {
+            System.out.println("Digite a origem do voo:");
+            String origem = scanner.nextLine();
+            System.out.println("Digite o destino do voo:");
+            String destino = scanner.nextLine();
+            System.out.println("Digite a data e hora do voo (formato: yyyy-MM-dd HH:mm):");
+            String dataHora = scanner.nextLine();
+            System.out.println("Digite o preço do voo:"); // o funcionário é quem realiza a compra da passagem pelo cliente!!!
+            double preco = scanner.nextDouble();
+            scanner.nextLine();
+
+            Voo voo = new Voo();
+            voo.origem = origem;
+            voo.destino = destino;
+            try {
+                voo.setDataHora(new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dataHora));
+            } catch (ParseException e) {
+                System.out.println("Erro ao parsear a data: " + e.getMessage());
+                return;
+            }
+            voo.setValorBasico(preco);
+
+            passagem.adicionarVoo(voo);
+
+            System.out.println("Deseja adicionar mais um voo? (s/n)");
+            resposta = scanner.nextLine();
+            if (!resposta.equalsIgnoreCase("s")) {
+                adicionarMaisVoos = false;
+            }
+        }
+
+        double tarifaTotal = passagem.calcularTarifaTotal();
+        System.out.println("Tarifa total: " + tarifaTotal);
+    }
+
 }
