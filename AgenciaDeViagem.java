@@ -3,15 +3,26 @@ import java.util.ArrayList;
 
 public class AgenciaDeViagem {
     private List<Funcionario> funcionarios;
-    private List<CompanhiaAerea> companhiasAereas;
+    private static List<CompanhiaAerea> companhiasAereas;
+    private List<Cliente> clientes;
+    private static double taxaFixa = 0.20;
 
     public AgenciaDeViagem() {
         this.funcionarios = new ArrayList<>();
         this.companhiasAereas = new ArrayList<>();
+        this.clientes = new ArrayList<>();
+    }
+
+    public static double getTaxaFixa() { // Adiciona um método para obter a taxa fixa
+        return taxaFixa;
     }
 
     public void adicionarFuncionario(Funcionario funcionario) {
         funcionarios.add(funcionario);
+    }
+
+    public void adicionarCliente(Cliente cliente) {
+        clientes.add(cliente);
     }
 
     public List<Funcionario> getFuncionarios() {
@@ -28,7 +39,7 @@ public class AgenciaDeViagem {
         companhiasAereas.add(companhiaAerea);
     }
 
-    public List<CompanhiaAerea> getCompanhiasAereas() {
+    public static List<CompanhiaAerea> getCompanhiasAereas() {
         return companhiasAereas;
     }
 
@@ -37,4 +48,5 @@ public class AgenciaDeViagem {
             System.out.println(companhiaAerea);
         }
     }
+    
 }
