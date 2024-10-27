@@ -24,9 +24,9 @@ public class Main {
         agenciaCentral.adicionarCompanhiaAerea(companhia2);
 
         agenciaCentral.adicionarCliente(new Cliente("João", "12345678901"));
-        
-        PassagemAerea p1 = new PassagemAerea ("GRU", "CNF", "2024-10-20 20:00", "Gol", 100.0, 200.0, 300.0, 50.0, 30.0);
-        PassagemAerea p2 = new PassagemAerea ("CNF", "GRU", "2024-10-25 20:00", "Azul", 100.0, 200.0, 300.0, 50.0, 30.0);
+        String freq = "1,2,3";
+        PassagemAerea p1 = new PassagemAerea ("GRU", "CNF", "2024-10-20 20:00", "Gol", 100.0, 200.0, 300.0, 50.0, 30.0,freq);
+        PassagemAerea p2 = new PassagemAerea ("CNF", "GRU", "2024-10-25 20:00", "Azul", 100.0, 200.0, 300.0, 50.0, 30.0,freq);
         List<PassagemAerea> passagens = new ArrayList<>();
         passagens.add(p1);
         passagens.add(p2);
@@ -98,7 +98,7 @@ public class Main {
     }
 
     public static void menuPrincipal() {
-        System.out.println("\nMENU PRINCIPAL");
+        System.out.println("MENU PRINCIPAL");
         System.out.println("1. Busca de Passagens");
         System.out.println("2. Cadastro de Funcionário");
         System.out.println("3. Cadastro de Companhia Aérea");
@@ -182,7 +182,7 @@ public class Main {
 
     public static void buscarPassagens(){
         System.out.println("-------- Busca de Passagens --------");
-        System.out.println("O que você deseja buscar?");
+        System.out.println("O que vocÊ desja buscar?");
         System.out.println("1. Passagens de Ida");
         System.out.println("2. Passagens de Ida e Volta");
         int escolha = scanner.nextInt();
@@ -196,7 +196,6 @@ public class Main {
         else{
             System.out.println("Opção inválida. Tente novamente.");
         }
-        System.out.println("---------------------------");
     }
 
     public static String buscaDePassagensIda() {
@@ -218,12 +217,11 @@ public class Main {
         System.out.println("Voo de Ida: ");
         String passagens = PassagemAerea.buscarPassagensIda(origem.toLowerCase(), destino.toLowerCase(), dataIda);
         
-        if (passagens == "Nenhuma passagem encontrada") {
+        if (passagens.isEmpty()) {
             System.out.println("Nenhuma passagem encontrada para os critérios fornecidos.");
             return "Nenhuma passagem encontrada";
         } else {
-            System.out.println("Passagens encontradas: " + passagens);
-            return "Passagens encontradas!";
+            return "Passagens encontradas: " + passagens;
         }
     }
 
@@ -408,6 +406,10 @@ public class Main {
         System.out.println("Digite a Data e Horário do Voo (formato: YYYY-MM-DD HH:MM): ");
         String dataHoraVoo = scanner.nextLine();
 
+        
+        System.out.println("Digite a frequencia: \n Ex: 1,2,3 \n Domingo = 1, Segunda = 2 e assim por diante");
+        String frequencia = scanner.nextLine();
+
         System.out.println("Digite a Companhia Aérea: ");
         String companhiaAerea = scanner.nextLine();
         existe = CompanhiaAerea.verificaCompanhia(companhiaAerea);
@@ -447,7 +449,7 @@ public class Main {
        // agenciaCentral.adicionarCliente(cliente);
         
         PassagemAerea passagem = new PassagemAerea(siglaAeroportoOrigem, siglaAeroportoDestino, dataHoraVoo, companhiaAerea,
-            tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais);
+            tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais, frequencia);
         
 
                 System.out.println("\nPassagem cadastrada com sucesso!");
@@ -485,6 +487,8 @@ public class Main {
             String aeroportoDestino = scanner.nextLine();
             System.out.println("Digite a data e hora do voo (formato: yyyy-MM-dd HH:mm):");
             String dataHoraVoo = scanner.nextLine();
+            System.out.println("Digite a frequencia: \n Ex: 1,2,3 \n Domingo = 1, Segunda = 2 e assim por diante");
+        String frequencia = scanner.nextLine();
             System.out.println("Digite a companhia aérea:");
             String companhiaAerea = scanner.nextLine();
             System.out.println("Digite a tarifa básica:");
@@ -499,7 +503,7 @@ public class Main {
             double valorBagagensAdicionais = scanner.nextDouble();
             scanner.nextLine();
 
-            passagem = new PassagemAerea(aeroportoOrigem, aeroportoDestino, dataHoraVoo, companhiaAerea, tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais);
+            passagem = new PassagemAerea(aeroportoOrigem, aeroportoDestino, dataHoraVoo, companhiaAerea, tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais, frequencia);
             passagensExistentes.add(passagem);
         }
 
