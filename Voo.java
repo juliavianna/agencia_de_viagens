@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Voo  {
-    String origem;
-    String destino;
-    Date dtHr;
-    String codigo;
-    CompanhiaAerea companhia;
-    Aeronave aeronave;
+    private String origem;
+    private String destino;
+    private String dtHr;
+    private String codigo;
+    private CompanhiaAerea companhia;
+    private Aeronave aeronave;
     private double valorBasico;
     private double valorBusiness;
     private double valorPremium;
@@ -18,13 +18,13 @@ public class Voo  {
     private LocalDate dataLimite;
     private List<Voo> voos = new ArrayList<>();
     
-
-    public Voo(String origem, String destino, Date dtHr, String codigo, CompanhiaAerea companhia, double valorBasico, double valorBusiness, double valorPremium) {
+                        
+    public Voo(String origem, String destino, String dtHr, String codigo, String companhia, double valorBasico, double valorBusiness, double valorPremium) {
         this.origem = origem;
         this.destino = destino;
         this.dtHr = dtHr;
         this.codigo = codigo;
-        this.companhia = companhia;
+        this.companhia = CompanhiaAerea.buscarCompanhiaAerea(companhia);
         this.valorBasico = valorBasico;
         this.valorBusiness = valorBusiness;
         this.valorPremium = valorPremium;
@@ -45,7 +45,7 @@ public class Voo  {
     public List<Voo> getVoos() {
         return voos;
     }
-    public Date getDataHora() {
+    public String getDataHora() {
         return dtHr;
     }
 
@@ -70,7 +70,7 @@ public class Voo  {
     }
 
 
-    public void setDataHora(Date horario) {
+    public void setDataHora(String horario) {
         this.dtHr = horario;
     }
 
@@ -93,13 +93,6 @@ public class Voo  {
         this.valorPremium = valorPremium;
     }
     
-/* 
-    public Voo(String origem, String destino, String dthr, String codigo, CompanhiaAerea companhiaAerea, double valorBasico, double valorBusiness, double valorPremium){
-        this.dtHr = dtHr;
-        this.codigo = codigo;
-        
-    }
-*/
     public void inativarVoo(Voo voo) {
         LocalDate dataAtual = LocalDate.now();
         if (dataAtual.isAfter(voo.dataLimite)) {

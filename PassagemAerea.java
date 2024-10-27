@@ -6,7 +6,7 @@ public class PassagemAerea {
     private String aeroportoDestino;
     private String dataHoraVoo;
     private String codigoVoo;
-    private String companhiaAerea;
+    private CompanhiaAerea companhiaAerea;
     private double tarifaBasica;
     private double tarifaBusiness;
     private double tarifaPremium;
@@ -15,13 +15,14 @@ public class PassagemAerea {
     private String moeda;
     private static List<PassagemAerea> passagens = new ArrayList<>();
     private List<Voo> voos;
+    private Voo voosNaPassagem;
 
     public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea, double tarifaBasica, double tarifaBusiness, double tarifaPremium, double valorPrimeiraBagagem, double valorBagagensAdicionais) {
         this.aeroportoOrigem = aeroportoOrigem.toLowerCase();
         this.aeroportoDestino = aeroportoDestino.toLowerCase();
         this.dataHoraVoo = dataHoraVoo;
         this.codigoVoo = Utils.gerarCodigoVoo();
-        this.companhiaAerea = companhiaAerea;
+        this.companhiaAerea = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea);
         this.tarifaBasica = tarifaBasica;
         this.tarifaBusiness = tarifaBusiness;
         this.tarifaPremium = tarifaPremium;
@@ -36,6 +37,7 @@ public class PassagemAerea {
             this.valorBagagensAdicionais = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea).getValorBagagensAdicionais();
         }
         
+        voosNaPassagem = new Voo(aeroportoOrigem, aeroportoDestino, dataHoraVoo, codigoVoo, companhiaAerea, tarifaBasica, tarifaBusiness, tarifaPremium);
         this.voos = new ArrayList<>();
 
         passagens.add(this);
@@ -81,7 +83,7 @@ public class PassagemAerea {
         return dataHoraVoo;
     }
 
-    public String getCompanhiaAerea() {
+    public CompanhiaAerea getCompanhiaAerea() {
         return companhiaAerea;
     }
 
@@ -98,11 +100,11 @@ public class PassagemAerea {
     }
 
     public double getValorPrimeiraBagagem() {
-        return CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea).getValorPrimeiraBagagem();
+        return companhiaAerea.getValorPrimeiraBagagem();
     }
 
     public double getValorBagagensAdicionais() {
-        CompanhiaAerea companhia = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea);
+        CompanhiaAerea companhia = companhiaAerea;
         if (companhia == null) {
             return 0;
         }
@@ -131,7 +133,7 @@ public class PassagemAerea {
         this.codigoVoo = codigoVoo;
     }
 
-    public void setCompanhiaAerea(String companhiaAerea) {
+    public void setCompanhiaAerea(CompanhiaAerea companhiaAerea) {
         this.companhiaAerea = companhiaAerea;
     }
 

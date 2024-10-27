@@ -1,13 +1,13 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
+
 
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static AgenciaDeViagem agenciaCentral = new AgenciaDeViagem();
     private static Funcionario funcionarioLogado = null;
+
 
 
     public static void main(String[] args) {
@@ -397,7 +397,7 @@ public class Main {
         if(existe2 == false){
             System.out.println("Aeroporto de Destino não encontrado");
             System.out.println("Digite novamente a sigla do Aeroporto de Destino: ");
-            siglaAeroportoOrigem = scanner.nextLine();
+            siglaAeroportoDestino = scanner.nextLine();
             existe2 = Aeroporto.verificaAeroporto(siglaAeroportoDestino);
             if(existe == false){
                 System.out.println("Aeroporto de Destino não encontrado");
@@ -407,6 +407,7 @@ public class Main {
 
         System.out.println("Digite a Data e Horário do Voo (formato: YYYY-MM-DD HH:MM): ");
         String dataHoraVoo = scanner.nextLine();
+        
 
         System.out.println("Digite a Companhia Aérea: ");
         String companhiaAerea = scanner.nextLine();
@@ -445,6 +446,7 @@ public class Main {
         String moeda = "BRL";
        // Cliente cliente = new Cliente(nome, cpf);
        // agenciaCentral.adicionarCliente(cliente);
+        
         
         PassagemAerea passagem = new PassagemAerea(siglaAeroportoOrigem, siglaAeroportoDestino, dataHoraVoo, companhiaAerea,
             tarifaBasica, tarifaBusiness, tarifaPremium, valorPrimeiraBagagem, valorBagagensAdicionais);
@@ -515,18 +517,18 @@ public class Main {
             double preco = scanner.nextDouble();
             scanner.nextLine();
 
-            Voo voo = new Voo();
-            voo.origem = origem;
-            voo.destino = destino;
-            try {
-                voo.setDataHora(new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dataHora));
-            } catch (ParseException e) {
-                System.out.println("Erro ao parsear a data: " + e.getMessage());
-                return;
-            }
-            voo.setValorBasico(preco);
+            // Voo voo = new Voo();
+            // voo.origem = origem;
+            // voo.destino = destino;
+            // try {
+            //     voo.setDataHora(new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dataHora));
+            // } catch (ParseException e) {
+            //     System.out.println("Erro ao parsear a data: " + e.getMessage());
+            //     return;
+            // }
+            // voo.setValorBasico(preco);
 
-            passagem.adicionarVoo(voo);
+           // passagem.adicionarVoo(voo);
 
             System.out.println("Deseja adicionar mais um voo? (s/n)");
             resposta = scanner.nextLine();
