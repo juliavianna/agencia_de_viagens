@@ -5,11 +5,16 @@ public class AgenciaDeViagem {
     private List<Funcionario> funcionarios;
     private static List<CompanhiaAerea> companhiasAereas;
     private List<Cliente> clientes;
+    private static double taxaFixa = 50.0;
 
     public AgenciaDeViagem() {
         this.funcionarios = new ArrayList<>();
         this.companhiasAereas = new ArrayList<>();
         this.clientes = new ArrayList<>();
+    }
+
+    public static double getTaxaFixa() { // Adiciona um método para obter a taxa fixa
+        return taxaFixa;
     }
 
     public void adicionarFuncionario(Funcionario funcionario) {

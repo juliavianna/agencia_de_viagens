@@ -534,7 +534,9 @@ public class Main {
         }
 
         double tarifaTotal = passagem.calcularTarifaTotal();
+        double remuneracaoAgencia = passagem.calcularRemuneracaoAgencia();
         System.out.println("Tarifa total: " + tarifaTotal);
+        System.out.println("Remuneração da agência: " + remuneracaoAgencia);
     }
 
 }

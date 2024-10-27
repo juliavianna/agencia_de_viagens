@@ -48,9 +48,13 @@ public class PassagemAerea {
     public double calcularTarifaTotal() {
         double tarifaTotal = 0;
         for (Voo voo : voos) {
-            tarifaTotal += voo.getValorBasico(); // ou valorBusiness, valorPremium conforme necessário
+            tarifaTotal += voo.getValorBasico();
         }
         return tarifaTotal;
+    }
+
+    public double calcularRemuneracaoAgencia() {
+        return calcularTarifaTotal() + AgenciaDeViagem.getTaxaFixa();
     }
 
     public List<Voo> getVoos() {
@@ -190,6 +194,7 @@ public class PassagemAerea {
             sb.append("\n").append(voo.getInfosVoo());
         }
         sb.append("\n Tarifa Total: ").append(calcularTarifaTotal());
+        sb.append("\n Remuneração da Agência: ").append(calcularRemuneracaoAgencia());
         return sb.toString();
     }
     
