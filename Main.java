@@ -520,6 +520,14 @@ public class Main {
                 valorFinal += passagem.getValorBagagensAdicionais();
 
             }
+            
+            if(passagem.getVooNaPassagem().getMaximoPassageiros() == 0){
+                System.out.println("Voo lotado. Impossivel reservar assento");
+            }
+            else{
+                System.out.println("Assento reservado com sucesso");
+                passagem.getVooNaPassagem().decrementarAssentos(passagem.getVooNaPassagem());
+            }
             System.out.println("Valor total da passagem: R$" + valorFinal);
             System.out.println("\n-----------------------\n" + valorFinal);
 

@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -16,24 +15,31 @@ public class Voo  {
     private boolean ativo = true;
     private LocalDate dataCriacao;
     private LocalDate dataLimite;
-    private List<Voo> voos = new ArrayList<>();
+    private static List<Voo> voos = new ArrayList<>();
     
                         
-    public Voo(String origem, String destino, String dtHr, String codigo, String companhia, double valorBasico, double valorBusiness, double valorPremium) {
+    public Voo(String origem, String destino, String dtHr, String codigo, String companhia, double valorBasico, double valorBusiness, double valorPremium, Aeronave aeronave) {
         this.origem = origem;
         this.destino = destino;
         this.dtHr = dtHr;
-        this.codigo = codigo;
+        this.codigo = Utils.gerarCodigoVoo();
         this.companhia = CompanhiaAerea.buscarCompanhiaAerea(companhia);
         this.valorBasico = valorBasico;
         this.valorBusiness = valorBusiness;
         this.valorPremium = valorPremium;
+        this.aeronave = aeronave;
+        if (aeronave == null) {
+            aeronave = new Aeronave("padrao", 100, 1000, 6);
+        }
 
         this.dataCriacao = LocalDate.now();
         this.dataLimite = dataCriacao.plusDays(30);     
 
         voos.add(this);
     }
+    
+
+
     public Voo(){
         voos.add(this);
     }
@@ -45,6 +51,19 @@ public class Voo  {
     public List<Voo> getVoos() {
         return voos;
     }
+        
+    public String getCodigoVoo(){
+        return codigo;
+    }
+
+    public String getOrigem() {
+        return origem;
+    }
+
+    public String getDestino() {
+        return destino;
+}
+
     public String getDataHora() {
         return dtHr;
     }
@@ -67,6 +86,10 @@ public class Voo  {
 
     public double getValorPremium() {
         return valorPremium;
+    }
+
+    public int getMaximoPassageiros() {
+        return aeronave.getMaximoPassageiros();
     }
 
 
@@ -100,9 +123,29 @@ public class Voo  {
         }
     }
 
+    public int decrementarAssentos(Voo voo) {
+        return aeronave.getMaximoPassageiros() - 1;
+    }
+
+    public static Voo buscarVoo(String codigo) {
+        for (Voo voo : voos) {
+            if (voo.getCodigo().toLowerCase().equals(codigo.toLowerCase())) {
+                return voo;
+            }
+        }
+        return null;
+    }
 
     public String getInfosVoo() {
         return "Voo de " + origem + " para " + destino + " às " + dtHr;
     }
+
+
+
+    public Object getAeronave() {
+        return aeronave;
+    }
+
+
 
 }

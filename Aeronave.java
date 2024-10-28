@@ -59,4 +59,9 @@ public class Aeronave {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "Aeronave nome= " + nome +"Aeronave maximoCarga= " + maximoCarga + ", maximoPassageiros= " + maximoPassageiros;
+    }
 }

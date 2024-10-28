@@ -15,16 +15,16 @@ public class PassagemAerea {
     private String moeda;
     private static List<PassagemAerea> passagens = new ArrayList<>();
     private List<Voo> voos;
-    private Voo voosNaPassagem;
+    private Voo vooNaPassagem;
     private Frequencia frequencia;
 
-    public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea,
-            double tarifaBasica, double tarifaBusiness, double tarifaPremium, double valorPrimeiraBagagem,
-            double valorBagagensAdicionais, String frequencia) {
+    public PassagemAerea(String aeroportoOrigem, String aeroportoDestino, String dataHoraVoo, String companhiaAerea, double tarifaBasica, double tarifaBusiness, double tarifaPremium, double valorPrimeiraBagagem,double valorBagagensAdicionais, String frequencia) {
+        vooNaPassagem = new Voo(aeroportoOrigem, aeroportoDestino, dataHoraVoo, codigoVoo, companhiaAerea, tarifaBasica, tarifaBusiness, tarifaPremium, null);
+        
         this.aeroportoOrigem = aeroportoOrigem.toLowerCase();
         this.aeroportoDestino = aeroportoDestino.toLowerCase();
         this.dataHoraVoo = dataHoraVoo;
-        this.codigoVoo = Utils.gerarCodigoVoo();
+        this.codigoVoo = vooNaPassagem.getCodigoVoo();
         this.companhiaAerea = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea);
         this.tarifaBasica = tarifaBasica;
         this.tarifaBusiness = tarifaBusiness;
@@ -41,11 +41,9 @@ public class PassagemAerea {
             this.valorBagagensAdicionais = 0;
         } else {
             this.valorPrimeiraBagagem = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea).getValorPrimeiraBagagem();
-            this.valorBagagensAdicionais = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea)
-                    .getValorBagagensAdicionais();
+            this.valorBagagensAdicionais = CompanhiaAerea.buscarCompanhiaAerea(companhiaAerea).getValorBagagensAdicionais();
         }
         
-        voosNaPassagem = new Voo(aeroportoOrigem, aeroportoDestino, dataHoraVoo, codigoVoo, companhiaAerea, tarifaBasica, tarifaBusiness, tarifaPremium);
         this.voos = new ArrayList<>();
 
         passagens.add(this);
@@ -166,6 +164,10 @@ public class PassagemAerea {
 
     public String getFreq(){
         return frequencia.mostrarFrequencia();
+    }
+
+    public Voo getVooNaPassagem() {
+        return Voo.buscarVoo(codigoVoo);
     }
 
     public static String buscarPassagensIda(String origem, String destino, String dataHora) {
